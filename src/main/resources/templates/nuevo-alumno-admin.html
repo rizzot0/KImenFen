@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuevo Alumno - Administrador</title>
+</head>
+<body>
+    <h1>Agregar Nuevo Alumno</h1>
+    <form th:action="@{/administrador/alumnos/guardar}" th:object="${alumno}" method="post">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" />
+        </div>
+        <div>
+            <label for="apellidoPaterno">Apellido Paterno:</label>
+            <input type="text" id="apellidoPaterno" th:field="*{apellidoPaterno}" />
+        </div>
+        <div>
+            <label for="apellidoMaterno">Apellido Materno:</label>
+            <input type="text" id="apellidoMaterno" th:field="*{apellidoMaterno}" />
+        </div>
+        <div>
+            <label for="rut">RUT:</label>
+            <input type="text" id="rut" th:field="*{rut}" />
+        </div>
+        <div>
+            <label for="telefonoApoderado">Teléfono Apoderado:</label>
+            <input type="text" id="telefonoApoderado" th:field="*{telefonoApoderado}" />
+        </div>
+        <div>
+            <button type="submit">Guardar</button>
+        </div>
+    </form>
+    <a th:href="@{/administrador/menu}">Volver al menú</a>
+</body>
+</html>

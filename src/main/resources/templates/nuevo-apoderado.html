@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuevo Apoderado</title>
+</head>
+<body>
+    <h1>Agregar Nuevo Apoderado</h1>
+    <form th:action="@{/administrador/apoderados/guardar}" th:object="${apoderado}" method="post">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" />
+        </div>
+        <div>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" th:field="*{apellido}" />
+        </div>
+        <div>
+            <label for="rut">RUT:</label>
+            <input type="text" id="rut" th:field="*{rut}" />
+        </div>
+        <div>
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" th:field="*{telefono}" />
+        </div>
+        <div>
+    		<label for="apoderado">Apoderado:</label>
+    		<select id="apoderado" th:field="*{apoderado}">
+        		<option th:each="apoderado : ${apoderados}" th:value="${apoderado.id}" th:text="${apoderado.nombre + ' ' + apoderado.apellido}"></option>
+    		</select>
+		</div>
+        <div>
+            <button type="submit">Guardar</button>
+        </div>
+        
+    </form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Menú del Profesor</title>
+</head>
+<body>
+    <h1>Menú del Profesor</h1>
+    <p>Contenido específico para profesores.</p>
+    <nav>
+        <ul>
+            <li><a th:href="@{/profesor/alumnos}">Lista de Alumnos</a></li>
+            <li><a th:href="@{/profesor/alumnos/nuevo}">Agregar Nuevo Alumno</a></li>
+            <li><a th:href="@{/logout}">Cerrar sesión</a></li> <!-- Enlace para cerrar sesión -->
+        </ul>
+    </nav>
+</body>
+</html>
