@@ -17,12 +17,12 @@ Comunidadkimen@gmail.com
 
 ## Información del Proyecto
 
-Realizado en Eclipse IDE usando plugin Spring boot (marketplace Eclipse IDE).
+Realizado usando Spring boot y maven (Eclipse IDE o intellij idea)
 
 ### Cómo iniciar
 
-Una vez instalado Spring Boot, ejecutar como Spring Boot App.
-En un navegador web, ingresar la siguiente dirección: http://localhost:8080.
+Usando Spring boot (Instalar plugin desde marketplace Eclipse si se usa desde alli, por defecto en Intellj Idea) ejecutar como Spring Boot App.
+En un navegador web, ingresar la siguiente dirección para acceder al progama: http://localhost:8080.
 
 ### Usuarios Disponibles
 
