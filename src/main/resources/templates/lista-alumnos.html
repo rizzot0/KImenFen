@@ -4,29 +4,39 @@
     <title>Lista de Alumnos</title>
 </head>
 <body>
-    <h1>Lista de Alumnos</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>RUT</th>
-                <th>Teléfono Apoderado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="alumno : ${alumnos}">
-                <td th:text="${alumno.id}"></td>
-                <td th:text="${alumno.nombre}"></td>
-                <td th:text="${alumno.apellidoPaterno}"></td>
-                <td th:text="${alumno.apellidoMaterno}"></td>
-                <td th:text="${alumno.rut}"></td>
-                <td th:text="${alumno.telefonoApoderado}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/profesor/menu}">Volver al Menú</a>
+<h1>Lista de Alumnos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido Paterno</th>
+        <th>Apellido Materno</th>
+        <th>RUT</th>
+        <th>Teléfono Apoderado</th>
+        <th>Direccion</th>
+        <th>Curso</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="alumno : ${alumnos}">
+        <td th:text="${alumno.id}"></td>
+        <td th:text="${alumno.nombre}"></td>
+        <td th:text="${alumno.apellidoPaterno}"></td>
+        <td th:text="${alumno.apellidoMaterno}"></td>
+        <td th:text="${alumno.rut}"></td>
+        <td th:text="${alumno.telefonoApoderado}"></td>
+        <td th:text="${alumno.direccion}"></td>
+        <td th:text="${alumno.curso}"></td>
+        <td>
+            <a th:href="@{/profesor/editar-alumno/{id}(id=${alumno.id})}">Editar</a>
+            <a th:href="@{/profesor/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
+            <a th:href="@{/profesor/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Anotación</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/profesor/menu}">Volver al Menú</a>
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Alumno</title>
+</head>
+<body>
+<h1>Editar Alumno</h1>
+<form th:action="@{/profesor/actualizar-alumno}" th:object="${alumno}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" th:field="*{nombre}" /><br/>
+
+    <label for="apellidoPaterno">Apellido Paterno:</label>
+    <input type="text" id="apellidoPaterno" th:field="*{apellidoPaterno}" /><br/>
+
+    <label for="apellidoMaterno">Apellido Materno:</label>
+    <input type="text" id="apellidoMaterno" th:field="*{apellidoMaterno}" /><br/>
+
+    <label for="rut">RUT:</label>
+    <input type="text" id="rut" th:field="*{rut}" /><br/>
+
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" th:field="*{telefonoApoderado}" /><br/>
+
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" th:field="*{direccion}" /><br/>
+
+    <label for="curso">Curso:</label>
+    <input type="text" id="curso" th:field="*{curso}" /><br/>
+
+    <button type="submit">Actualizar</button>
+</form>
+<a th:href="@{/profesor/menu}">Volver al Menú</a>
+</body>
+</html>

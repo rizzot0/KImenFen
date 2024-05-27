@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,26 +26,49 @@ public class Alumno {
     private String apellidoMaterno;
     private String rut;
     private String telefonoApoderado;
+    private String direccion;
+    private String curso;
+    
 
     @ManyToOne
     @JoinColumn(name = "apoderado_id")
     private Apoderado apoderado;
     
     @ElementCollection
-    private List<String> anotaciones;
+    private List<String> anotaciones = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "alumno")
     private List<Nota> notas;
 
     public Alumno() {}
 
-    public Alumno(String nombre, String apellidoPaterno, String apellidoMaterno, String rut, String telefonoApoderado) {
+    public Alumno(String nombre, String apellidoPaterno, String apellidoMaterno, String rut, String telefonoApoderado,String direccion,String curso) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.rut = rut;
         this.telefonoApoderado = telefonoApoderado;
+        this.direccion = direccion;
+        this.curso = curso;
     }
+
+    
+    
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getCurso() {
+		return curso;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
 
 	public Long getId() {
 		return id;

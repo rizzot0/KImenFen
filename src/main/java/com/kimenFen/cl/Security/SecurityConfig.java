@@ -18,42 +18,41 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests(authorize -> authorize
-                .requestMatchers("/apoderado/**").hasRole("APODERADO")
-                .requestMatchers("/profesor/**").hasAnyRole("PROFESOR", "ADMIN")
-                .requestMatchers("/administrador/**").hasRole("ADMIN")
-                .anyRequest().permitAll()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .successHandler(customAuthenticationSuccessHandler())
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .permitAll()
-            );
+                .authorizeRequests(authorize -> authorize
+                        .requestMatchers("/administrador/**").hasRole("ADMIN")
+                        .requestMatchers("/profesor/**").hasAnyRole("PROFESOR", "ADMIN")
+                        .anyRequest().permitAll()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .successHandler(customAuthenticationSuccessHandler())
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .permitAll()
+                );
         return http.build();
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails apoderado = User.withDefaultPasswordEncoder()
-            .username("apoderado")
-            .password("password")
-            .roles("APODERADO")
-            .build();
+                .username("apoderado")
+                .password("password")
+                .roles("APODERADO")
+                .build();
 
         UserDetails profesor = User.withDefaultPasswordEncoder()
-            .username("profesor")
-            .password("password")
-            .roles("PROFESOR")
-            .build();
+                .username("profesor")
+                .password("password")
+                .roles("PROFESOR")
+                .build();
 
         UserDetails administrador = User.withDefaultPasswordEncoder()
-            .username("administrador")
-            .password("password")
-            .roles("ADMIN")
-            .build();
+                .username("administrador")
+                .password("password")
+                .roles("ADMIN")
+                .build();
 
         return new InMemoryUserDetailsManager(apoderado, profesor, administrador);
     }
@@ -73,3 +72,4 @@ public class SecurityConfig {
         };
     }
 }
+
