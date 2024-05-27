@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Asociar Alumno a Apoderado</title>
+</head>
+<body>
+<h1>Asociar Alumno a Apoderado</h1>
+<form th:action="@{/administrador/asociar-alumno-apoderado}" method="post">
+    <label for="alumno">Alumno:</label>
+    <select id="alumno" name="alumnoId">
+        <option th:each="alumno : ${alumnos}" th:value="${alumno.id}" th:text="${alumno.nombre} + ' ' + ${alumno.apellidoPaterno} + ' ' + ${alumno.apellidoMaterno}"></option>
+    </select><br/>
+
+    <label for="apoderado">Apoderado:</label>
+    <select id="apoderado" name="apoderadoId">
+        <option th:each="apoderado : ${apoderados}" th:value="${apoderado.id}" th:text="${apoderado.nombre} + ' ' + ${apoderado.apellido}"></option>
+    </select><br/>
+
+    <button type="submit">Asociar</button>
+</form>
+<a th:href="@{/administrador/menu}">Volver al Menú</a>
+</body>
+</html>

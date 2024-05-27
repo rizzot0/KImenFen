@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Apoderados</title>
+</head>
+<body>
+<h1>Lista de Apoderados</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>RUT</th>
+        <th>Teléfono</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="apoderado : ${apoderados}">
+        <td th:text="${apoderado.id}"></td>
+        <td th:text="${apoderado.nombre}"></td>
+        <td th:text="${apoderado.apellido}"></td>
+        <td th:text="${apoderado.rut}"></td>
+        <td th:text="${apoderado.telefono}"></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/administrador/menu}">Volver al Menú</a>
+</body>
+</html>

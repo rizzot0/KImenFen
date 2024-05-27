@@ -23,12 +23,6 @@
             <input type="text" id="telefono" th:field="*{telefono}" />
         </div>
         <div>
-    		<label for="apoderado">Apoderado:</label>
-    		<select id="apoderado" th:field="*{apoderado}">
-        		<option th:each="apoderado : ${apoderados}" th:value="${apoderado.id}" th:text="${apoderado.nombre + ' ' + apoderado.apellido}"></option>
-    		</select>
-		</div>
-        <div>
             <button type="submit">Guardar</button>
         </div>
         

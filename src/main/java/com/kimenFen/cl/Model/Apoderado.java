@@ -24,6 +24,7 @@ public class Apoderado {
     @OneToMany(mappedBy = "apoderado", cascade = CascadeType.ALL)
     private List<Alumno> alumnos;
 
+ 
 	public Long getId() {
 		return id;
 	}
