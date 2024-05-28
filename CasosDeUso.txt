@@ -1,0 +1,193 @@
+1. Agregar nuevo alumno (Admin-profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor agregar un nuevo alumno al sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El administrador o profesor selecciona la opción para agregar un nuevo alumno.
+        2-El sistema muestra un formulario para ingresar los datos del nuevo alumno.
+        3-El administrador o profesor completa el formulario con la información del alumno (nombre, apellido, etc.).
+        4-El administrador o profesor envía el formulario.
+        5-El sistema valida los datos ingresados.
+        6-El sistema guarda el nuevo alumno en la base de datos.
+    Flujos alternativos:
+        -Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        -Si los datos ingresados no son válidos, el sistema muestra un mensaje de error y vuelve a mostrar el formulario para corregir los errores.
+
+2. Listar alumnos (Admin-profesor-Apoderado)
+    Actor(es): Admin, Profesor, Apoderado
+    Descripción: Este caso de uso permite a un administrador, profesor o apoderado listar los alumnos registrados en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El administrador, profesor o apoderado selecciona la opción para listar alumnos.
+        2-El sistema muestra la lista de alumnos registrados en el sistema.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si el usuario no tiene los permisos necesarios para listar alumnos, el sistema muestra un mensaje de error.
+
+3. Editar alumno (Admin-profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor editar la información de un alumno existente en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para editar un alumno.
+        2-El sistema muestra un formulario prellenado con la información actual del alumno.
+        3-El usuario modifica la información del alumno según sea necesario.
+        4-El usuario envía el formulario.
+        5-El sistema valida los datos modificados.
+        6-El sistema guarda los cambios en la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si los datos modificados no son válidos, el sistema muestra un mensaje de error y vuelve a mostrar el formulario para corregir los errores.
+
+4. Eliminar alumno (Admin-profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor eliminar un alumno del sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para eliminar un alumno.
+        2-El sistema muestra una confirmación para eliminar el alumno.
+        3-El usuario confirma la eliminación.
+        4-El sistema elimina al alumno de la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si el usuario cancela la eliminación, el sistema no realiza cambios y vuelve al estado anterior.
+
+5. Agregar anotacion (Admin-Profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor agregar una anotación a un alumno en el sistema.
+    Flujo principal:
+        1-El usuario inicia sesión en el sistema.
+        2-El usuario selecciona la opción para agregar una anotación a un alumno.
+        3-El sistema muestra un formulario para ingresar la anotación.
+        4-El usuario ingresa la anotación en el formulario.
+        5-El usuario envía el formulario.
+        6-El sistema guarda la anotación asociada al alumno en la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si la anotación ingresada no es válida, el sistema muestra un mensaje de error y vuelve a mostrar el formulario para corregir los errores.
+
+6. Ver anotaciones (Admin-profesor-Apoderado):
+    Actor(es): Admin, Profesor, Apoderado
+    Descripción: Este caso de uso permite a un administrador, profesor o apoderado ver las anotaciones asociadas a un alumno en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para ver las anotaciones de un alumno.
+        2-El sistema muestra la lista de anotaciones asociadas al alumno seleccionado.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si el usuario no tiene los permisos necesarios para ver las anotaciones de un alumno, el sistema muestra un mensaje de error.
+
+7. Editar anotacion (Admin-profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor editar una anotación existente asociada a un alumno en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para editar una anotación de un alumno.
+        1.1-El usuario selecciona al alumno en cuestion
+        2-El sistema muestra un formulario prellenado con la anotación actual del alumno.
+        3-El usuario modifica la anotación según sea necesario.
+        4-El usuario envía el formulario.
+        5-El sistema valida la anotación modificada.
+        6-El sistema guarda los cambios en la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si la anotación modificada no es válida, el sistema muestra un mensaje de error y vuelve a mostrar el formulario para corregir los errores.
+
+8.Eliminar anotacion (Admin-Profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor eliminar una anotación asociada a un alumno en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para eliminar una anotación de un alumno.
+        2-El usuario selecciona el alumno en cuestion
+        3-El sistema muestra una confirmación para eliminar la anotación.
+        4-El usuario confirma la eliminación.
+        5-El sistema elimina la anotación de la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si el usuario cancela la eliminación, el sistema no realiza cambios y vuelve al estado anterior.
+
+9. Agregar nota (Admin-Profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor agregar una nota a una asignatura de un alumno en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para agregar una nota a un alumno.
+        2-El sistema muestra un formulario para ingresar la información de la nota (asignatura, calificación, etc.).
+        3-El usuario ingresa la información de la nota en el formulario.
+        4-El usuario envía el formulario.
+        5-El sistema guarda la nota asociada al alumno en la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si la información de la nota ingresada no es válida, el sistema muestra un mensaje de error y vuelve a mostrar el formulario para corregir los errores.
+
+10. Editar notas (Admin-profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor editar una nota existente asociada a un alumno en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para editar una nota de un alumno.
+        2-El sistema muestra un formulario prellenado con la información actual de la nota.
+        3-El usuario modifica la información de la nota según sea necesario.
+        4-El usuario envía el formulario.
+        5-El sistema valida la información modificada.
+        6-El sistema guarda los cambios en la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si la información modificada de la nota no es válida, el sistema muestra un mensaje de error y vuelve a mostrar el formulario para corregir los errores.
+    
+11. Eliminar nota (Admin-profesor):
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor eliminar una nota asociada a un alumno en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para eliminar una nota de un alumno.
+        2-El sistema muestra una confirmación para eliminar la nota.
+        3-El usuario confirma la eliminación.
+        4-El sistema elimina la nota de la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si el usuario cancela la eliminación, el sistema no realiza cambios y vuelve al estado anterior.
+
+12. Asociar Alumno-Apoderado:
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor asociar un alumno con su respectivo apoderado en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para asociar un apoderado a un alumno.
+        2-El sistema muestra una lista de alumnos y apoderados disponibles.
+        3-El usuario selecciona el alumno y el apoderado correspondientes.
+        4-El usuario confirma la asociación.
+        5-El sistema guarda la asociación en la base de datos.
+    Flujos alternativos:
+        Si la asociación no se puede realizar (por ejemplo, si el apoderado ya está asociado a otro alumno), el sistema muestra un mensaje de error.
+
+13. Asociar Nota-Alumno:
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor asociar una nota a un alumno en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para asociar una nota a un alumno.
+        2-El sistema muestra una lista de alumnos disponibles.
+        3-El usuario selecciona el alumno al que desea asociar la nota.
+        4-El usuario ingresa los detalles de la nota (asignatura, calificación, etc.).
+        5-El usuario envía la información.
+        6-El sistema guarda la nota asociada al alumno en la base de datos.
+    Flujos alternativos:
+        Usuario no registrado, muestra error y pide registrar o ingresar con una cuenta existente
+        Si la información ingresada no es válida, el sistema muestra un mensaje de error y vuelve al formulario.
+
+14. Asociar Anotacion-Alumno:
+    Actor(es): Admin, Profesor
+    Descripción: Este caso de uso permite a un administrador o profesor asociar una anotación (positiva o negativa) a un alumno en el sistema.
+    Flujo principal:
+        0-El usuario inicia sesión en el sistema.
+        1-El usuario selecciona la opción para asociar una anotación a un alumno.
+        2-El sistema muestra una lista de alumnos disponibles.
+        3-El usuario selecciona el alumno al que desea asociar la anotación.
+        4-El usuario ingresa los detalles de la anotación.
+        5-El usuario envía la información.
+        6-El sistema guarda la anotación asociada al alumno en la base de datos.
+    Flujos alternativos:
+        Si la información ingresada no es válida, el sistema muestra un mensaje de error y vuelve al formulario.
+
