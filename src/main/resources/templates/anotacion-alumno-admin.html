@@ -8,7 +8,7 @@
 <form th:action="@{/administrador/agregar-anotacion}" method="post">
     <input type="hidden" name="id" th:value="${alumno.id}" />
     <label for="anotacion">Anotación:</label>
-    <input type="text" id="anotacion" name="anotacion" /><br/>
+    <input type="text" id="anotacion" name="anotacion" required/><br/>
     <button type="submit">Agregar</button>
 </form>
 <a th:href="@{/menu/administrador}">Volver al Menú</a>

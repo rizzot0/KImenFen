@@ -100,14 +100,21 @@ public class AdministradorController {
     @GetMapping("/administrador/editar-alumno/{id}")
     public String mostrarFormularioEdicion(@PathVariable("id") Long id, Model model) {
         Alumno alumno = alumnoService.obtenerAlumnoPorId(id);
+        if (alumno == null) {
+            return "redirect:/administrador/alumnos";
+        }
         model.addAttribute("alumno", alumno);
         return "editar-alumno-admin";
     }
 
     @PostMapping("/administrador/actualizar-alumno")
-    public String actualizarAlumno(Alumno alumno) {
+    public String actualizarAlumno(@ModelAttribute Alumno alumno, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("alumno", alumno);
+            return "editar-alumno-admin";
+        }
         alumnoService.actualizarAlumno(alumno);
-        return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos para el administrador después de la actualización
+        return "redirect:/administrador/alumnos";
     }
 
     @GetMapping("/administrador/eliminar-alumno/{id}")
@@ -120,15 +127,28 @@ public class AdministradorController {
     @GetMapping("/administrador/anotacion-alumno/{id}")
     public String mostrarFormularioAnotacion(@PathVariable("id") Long id, Model model) {
         Alumno alumno = alumnoService.obtenerAlumnoPorId(id);
+        if (alumno == null) {
+            return "redirect:/administrador/alumnos";
+        }
         model.addAttribute("alumno", alumno);
         model.addAttribute("rol", "administrador");
         return "anotacion-alumno-admin";
     }
 
     @PostMapping("/administrador/agregar-anotacion")
-    public String agregarAnotacion(@RequestParam Long id, @RequestParam String anotacion, Model model) {
+    public String agregarAnotacion(@RequestParam Long id, @RequestParam String anotacion) {
         alumnoService.agregarAnotacion(id, anotacion);
         return "redirect:/administrador/alumnos";
+    }
+
+    @GetMapping("/administrador/ver-anotaciones/{id}")
+    public String verAnotaciones(@PathVariable("id") Long id, Model model) {
+        Alumno alumno = alumnoService.obtenerAlumnoPorId(id);
+        if (alumno != null) {
+            model.addAttribute("alumno", alumno);
+            model.addAttribute("anotaciones", alumno.getAnotaciones());
+        }
+        return "ver-anotaciones-admin";
     }
 
 }

@@ -5,6 +5,9 @@ import com.kimenFen.cl.Repository.AlumnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class AlumnoService {
 
@@ -24,10 +27,16 @@ public class AlumnoService {
     }
 
     public void agregarAnotacion(Long id, String anotacion) {
-        Alumno alumno = obtenerAlumnoPorId(id);
+        Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             alumno.getAnotaciones().add(anotacion);
             alumnoRepository.save(alumno);
         }
     }
+
+    public List<String> obtenerAnotaciones(Long id) {
+        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+        return alumno != null ? alumno.getAnotaciones() : new ArrayList<>();
+    }
 }
+

@@ -70,14 +70,28 @@ public class ProfesorController {
     @GetMapping("/profesor/anotacion-alumno/{id}")
     public String mostrarFormularioAnotacion(@PathVariable("id") Long id, Model model) {
         Alumno alumno = alumnoService.obtenerAlumnoPorId(id);
+        if (alumno == null) {
+            return "redirect:/profesor/alumnos";
+        }
         model.addAttribute("alumno", alumno);
-        model.addAttribute("rol", "profesor");
+        model.addAttribute("rol", "administrador");
         return "anotacion-alumno-profesor";
     }
 
     @PostMapping("/profesor/agregar-anotacion")
-    public String agregarAnotacion(@RequestParam Long id, @RequestParam String anotacion, Model model) {
+    public String agregarAnotacion(@RequestParam Long id, @RequestParam String anotacion) {
         alumnoService.agregarAnotacion(id, anotacion);
         return "redirect:/profesor/alumnos";
     }
+
+    @GetMapping("/profesor/ver-anotaciones/{id}")
+    public String verAnotaciones(@PathVariable("id") Long id, Model model) {
+        Alumno alumno = alumnoService.obtenerAlumnoPorId(id);
+        if (alumno != null) {
+            model.addAttribute("alumno", alumno);
+            model.addAttribute("anotaciones", alumno.getAnotaciones());
+        }
+        return "ver-anotaciones-profesor";
+    }
+
 }
