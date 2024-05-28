@@ -14,6 +14,8 @@
         <th>Apellido Materno</th>
         <th>RUT</th>
         <th>Teléfono</th>
+        <th>Dirección</th>
+        <th>Curso</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -28,9 +30,10 @@
         <td th:text="${alumno.direccion}"></td>
         <td th:text="${alumno.curso}"></td>
         <td>
-            <a th:href="@{/administrador/alumnos/editar/{id}(id=${alumno.id})}">Editar</a>
+            <a th:href="@{/administrador/editar-alumno/{id}(id=${alumno.id})}">Editar</a>
             <a th:href="@{/administrador/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
-            <a th:href="@{/admininistrador/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Anotación</a>
+            <a th:href="@{/administrador/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Anotación</a>
+            <a th:href="@{/administrador/ver-anotaciones/{id}(id=${alumno.id})}">Ver Anotaciones</a>
         </td>
     </tr>
     </tbody>

@@ -13,8 +13,8 @@
         <th>Apellido Paterno</th>
         <th>Apellido Materno</th>
         <th>RUT</th>
-        <th>Teléfono Apoderado</th>
-        <th>Direccion</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
         <th>Curso</th>
         <th>Acciones</th>
     </tr>
@@ -30,14 +30,11 @@
         <td th:text="${alumno.direccion}"></td>
         <td th:text="${alumno.curso}"></td>
         <td>
-            <a th:href="@{/profesor/editar-alumno/{id}(id=${alumno.id})}">Editar</a>
-            <a th:href="@{/profesor/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
-            <a th:href="@{/profesor/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Anotación</a>
-            <a th:href="@{/profesor/ver-anotaciones/{id}(id=${alumno.id})}">Ver Anotaciones</a>
+            <a th:href="@{/apoderado/ver-anotaciones/{id}(id=${alumno.id})}">Ver Anotaciones</a>
         </td>
     </tr>
     </tbody>
 </table>
-<a th:href="@{/profesor/menu}">Volver al Menú</a>
+<a th:href="@{/administrador/menu}">Volver al Menú</a>
 </body>
 </html>
