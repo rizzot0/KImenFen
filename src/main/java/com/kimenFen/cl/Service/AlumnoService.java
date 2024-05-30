@@ -27,7 +27,7 @@ public class AlumnoService {
     }
 
     public void agregarAnotacion(Long id, String anotacion) {
-        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+        Alumno alumno = obtenerAlumnoPorId(id);
         if (alumno != null) {
             alumno.getAnotaciones().add(anotacion);
             alumnoRepository.save(alumno);
@@ -35,8 +35,7 @@ public class AlumnoService {
     }
 
     public List<String> obtenerAnotaciones(Long id) {
-        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+        Alumno alumno = obtenerAlumnoPorId(id);
         return alumno != null ? alumno.getAnotaciones() : new ArrayList<>();
     }
 }
-

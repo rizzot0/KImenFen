@@ -14,21 +14,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/profesor")
 public class ProfesorController {
 
     @Autowired
     private AlumnoRepository alumnoRepository;
-    @Autowired
-    private AlumnoService alumnoService;
     private static final Logger logger = LoggerFactory.getLogger(ProfesorController.class);
 
-    @GetMapping("/profesor/alumnos/nuevo")
+    @GetMapping("/alumnos/nuevo")
     public String mostrarFormularioNuevoAlumno(Model model) {
         model.addAttribute("alumno", new Alumno());
+        model.addAttribute("rol", "profesor");
         return "nuevo-alumno";
     }
 
-    @PostMapping("/profesor/alumnos/guardar")
+    @PostMapping("/alumnos/guardar")
     public String guardarAlumno(@ModelAttribute Alumno alumno, BindingResult result) {
         if (result.hasErrors()) {
             return "nuevo-alumno";
@@ -38,60 +38,66 @@ public class ProfesorController {
         return "redirect:/profesor/menu";
     }
 
-    @GetMapping("/profesor/alumnos")
+    @GetMapping("/alumnos")
     public String listarAlumnos(Model model) {
         List<Alumno> alumnos = alumnoRepository.findAll();
         model.addAttribute("alumnos", alumnos);
+        model.addAttribute("rol", "profesor");
         return "lista-alumnos";
     }
 
-    @GetMapping("/profesor/editar-alumno/{id}")
-    public String mostrarFormularioEdicion(@PathVariable("id") Long id, Model model) {
-        Alumno alumno = alumnoService.obtenerAlumnoPorId(id);
-        model.addAttribute("alumno", alumno);
-        return "editar-alumno-profesor";
-    }
-
-    @PostMapping("/profesor/actualizar-alumno")
-    public String actualizarAlumno(@ModelAttribute Alumno alumno, BindingResult result) {
-        if (result.hasErrors()) {
-            return "editar-alumno-profesor";
-        }
-        alumnoService.actualizarAlumno(alumno);
-        return "redirect:/profesor/alumnos"; // Redirige a la lista de alumnos para el profesor después de la actualización
-    }
-
-    @GetMapping("/profesor/eliminar-alumno/{id}")
-    public String eliminarAlumno(@PathVariable("id") Long id) {
-        alumnoService.eliminarAlumno(id);
-        return "redirect:/profesor/alumnos";
-    }
-
-    @GetMapping("/profesor/anotacion-alumno/{id}")
-    public String mostrarFormularioAnotacion(@PathVariable("id") Long id, Model model) {
-        Alumno alumno = alumnoService.obtenerAlumnoPorId(id);
+    @GetMapping("/editar-alumno/{id}")
+    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model) {
+        Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno == null) {
             return "redirect:/profesor/alumnos";
         }
         model.addAttribute("alumno", alumno);
-        model.addAttribute("rol", "administrador");
-        return "anotacion-alumno-profesor";
+        model.addAttribute("rol", "profesor");
+        return "editar-alumno";
     }
 
-    @PostMapping("/profesor/agregar-anotacion")
-    public String agregarAnotacion(@RequestParam Long id, @RequestParam String anotacion) {
-        alumnoService.agregarAnotacion(id, anotacion);
+    @PostMapping("/actualizar-alumno")
+    public String actualizarAlumno(@ModelAttribute Alumno alumno) {
+        alumnoRepository.save(alumno);
+        return "redirect:/profesor/menu";
+    }
+
+    @GetMapping("/eliminar-alumno/{id}")
+    public String eliminarAlumno(@PathVariable("id") Long id) {
+        alumnoRepository.deleteById(id);
         return "redirect:/profesor/alumnos";
     }
 
-    @GetMapping("/profesor/ver-anotaciones/{id}")
+    @GetMapping("/anotacion-alumno/{id}")
+    public String agregarAnotacion(@PathVariable("id") Long id, Model model) {
+        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+        if (alumno != null) {
+            model.addAttribute("alumno", alumno);
+            model.addAttribute("rol", "profesor");
+        }
+        return "anotacion-alumno";
+    }
+
+    @PostMapping("/agregar-anotacion")
+    public String guardarAnotacion(@RequestParam Long id, @RequestParam String anotacion) {
+        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+        if (alumno != null) {
+            alumno.getAnotaciones().add(anotacion);
+            alumnoRepository.save(alumno);
+        }
+        return "redirect:/profesor/alumnos";
+    }
+
+    @GetMapping("/ver-anotaciones/{id}")
     public String verAnotaciones(@PathVariable("id") Long id, Model model) {
-        Alumno alumno = alumnoService.obtenerAlumnoPorId(id);
+        Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
             model.addAttribute("anotaciones", alumno.getAnotaciones());
+            model.addAttribute("rol", "profesor");
         }
-        return "ver-anotaciones-profesor";
+        return "ver-anotaciones";
     }
-
 }
+

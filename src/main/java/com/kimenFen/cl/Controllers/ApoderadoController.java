@@ -21,8 +21,10 @@ public class ApoderadoController{
     @GetMapping("/apoderado/alumnos")
     public String listarAlumnos(Model model) {
         model.addAttribute("alumnos", alumnoRepository.findAll());
-        return "lista-alumnos-apoderado";
+        model.addAttribute("rol", "apoderado");
+        return "lista-alumnos";
     }
+
 
     @GetMapping("/apoderado/ver-anotaciones/{id}")
     public String verAnotaciones(@PathVariable("id") Long id, Model model) {
@@ -30,9 +32,11 @@ public class ApoderadoController{
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
             model.addAttribute("anotaciones", alumno.getAnotaciones());
+            model.addAttribute("rol", "apoderado");
         } else {
             return "redirect:/apoderado/alumnos";
         }
-        return "ver-anotaciones-apoderado";
+        return "ver-anotaciones";
     }
+
 }
