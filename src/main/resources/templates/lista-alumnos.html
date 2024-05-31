@@ -32,15 +32,13 @@
         <td>
             <a th:if="${rol == 'administrador'}" th:href="@{/administrador/editar-alumno/{id}(id=${alumno.id})}">Editar</a>
             <a th:if="${rol == 'administrador'}" th:href="@{/administrador/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
-            <a th:if="${rol == 'administrador'}" th:href="@{/administrador/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Anotación</a>
-            <a th:if="${rol == 'administrador'}" th:href="@{/administrador/ver-anotaciones/{id}(id=${alumno.id})}">Ver Anotaciones</a>
+            <a th:if="${rol == 'administrador'}" th:href="@{/administrador/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Registro de vida</a>
+            <a th:if="${rol == 'administrador'}" th:href="@{/administrador/ver-anotaciones/{id}(id=${alumno.id})}">Ver Registro de vida</a>
 
-            <a th:if="${rol == 'profesor'}" th:href="@{/profesor/editar-alumno/{id}(id=${alumno.id})}">Editar</a>
-            <a th:if="${rol == 'profesor'}" th:href="@{/profesor/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
-            <a th:if="${rol == 'profesor'}" th:href="@{/profesor/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Anotación</a>
-            <a th:if="${rol == 'profesor'}" th:href="@{/profesor/ver-anotaciones/{id}(id=${alumno.id})}">Ver Anotaciones</a>
+            <a th:if="${rol == 'profesor'}" th:href="@{/profesor/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Registro de vida</a>
+            <a th:if="${rol == 'profesor'}" th:href="@{/profesor/ver-anotaciones/{id}(id=${alumno.id})}">Ver Resgistro de vida</a>
 
-            <a th:if="${rol == 'apoderado'}" th:href="@{/apoderado/ver-anotaciones/{id}(id=${alumno.id})}">Ver Anotaciones</a>
+            <a th:if="${rol == 'apoderado'}" th:href="@{/apoderado/ver-anotaciones/{id}(id=${alumno.id})}">Ver Registro de vida</a>
         </td>
     </tr>
     </tbody>

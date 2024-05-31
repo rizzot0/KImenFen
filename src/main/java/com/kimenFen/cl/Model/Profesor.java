@@ -1,9 +1,11 @@
 package com.kimenFen.cl.Model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+@Entity
 public class Profesor {
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,15 +15,21 @@ public class Profesor {
 	    private String apellido;
 	    private String rut;
 	    private String telefono;
+
 		public Profesor(Long id, String nombre, String apellido, String rut, String telefono) {
-			super();
 			this.id = id;
 			this.nombre = nombre;
 			this.apellido = apellido;
 			this.rut = rut;
 			this.telefono = telefono;
 		}
-		public Long getId() {
+
+	public Profesor() {
+
+	}
+
+
+	public Long getId() {
 			return id;
 		}
 		public void setId(Long id) {

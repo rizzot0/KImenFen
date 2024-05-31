@@ -1,11 +1,14 @@
 package com.kimenFen.cl.Controllers;
 
 import com.kimenFen.cl.Model.Alumno;
+import com.kimenFen.cl.Model.Profesor;
 import com.kimenFen.cl.Model.Apoderado;
 import com.kimenFen.cl.Repository.AlumnoRepository;
 import com.kimenFen.cl.Repository.ApoderadoRepository;
 
+import com.kimenFen.cl.Repository.ProfesorRepository;
 import com.kimenFen.cl.Service.AlumnoService;
+import com.kimenFen.cl.Service.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,9 @@ public class AdministradorController {
     private ApoderadoRepository apoderadoRepository;
     @Autowired
     private AlumnoRepository alumnoRepository;
+    @Autowired
+    private ProfesorRepository profesorRepository;
+
 
     @GetMapping("/alumnos")
     public String listarAlumnos(Model model) {
@@ -35,6 +41,27 @@ public class AdministradorController {
     public String listarApoderados(Model model) {
         model.addAttribute("apoderados", apoderadoRepository.findAll());
         return "lista-apoderado";
+    }
+
+    @GetMapping("/profesores")
+    public String listarProfesores(Model model) {
+        model.addAttribute("profesores", profesorRepository.findAll());
+        return "lista-profesores";
+    }
+
+    @GetMapping("/profesores/nuevo")
+    public String mostrarFormularioDeNuevoProfesor(Model model) {
+        model.addAttribute("profesor", new Profesor());
+        return "nuevo-profesor";
+    }
+
+    @PostMapping("/profesores/guardar")
+    public String guardarProfesor(@ModelAttribute Profesor profesor, BindingResult result) {
+        if (result.hasErrors()) {
+            return "nuevo-profesor";
+        }
+        profesorRepository.save(profesor);
+        return "redirect:/administrador/profesores";
     }
 
     @GetMapping("/alumnos/nuevo")
@@ -93,7 +120,7 @@ public class AdministradorController {
     }
 
     @GetMapping("/editar-alumno/{id}")
-    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model) {
+    public String mostrarFormularioEditarAlumno(@PathVariable("id") Long id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno == null) {
             return "redirect:/administrador/alumnos";
@@ -145,5 +172,29 @@ public class AdministradorController {
         }
         return "ver-anotaciones";
     }
+
+    @GetMapping("/editar-apoderado/{id}")
+    public String mostrarFormularioEditarApoderado(@PathVariable("id") Long id, Model model) {
+        Apoderado apoderado = apoderadoRepository.findById(id).orElse(null);
+        if (apoderado == null) {
+            return "redirect:/administrador/apoderados";
+        }
+        model.addAttribute("apoderado", apoderado);
+        return "editar-apoderado";
+    }
+
+
+    @PostMapping("/actualizar-apoderado")
+    public String actualizarApoderado(@ModelAttribute Apoderado apoderado) {
+        apoderadoRepository.save(apoderado);
+        return "redirect:/administrador/apoderados";
+    }
+
+    @GetMapping("/eliminar-apoderado/{id}")
+    public String eliminarApoderado(@PathVariable("id") Long id) {
+        apoderadoRepository.deleteById(id);
+        return "redirect:/administrador/apoderados";
+    }
+
 }
 

@@ -21,22 +21,6 @@ public class ProfesorController {
     private AlumnoRepository alumnoRepository;
     private static final Logger logger = LoggerFactory.getLogger(ProfesorController.class);
 
-    @GetMapping("/alumnos/nuevo")
-    public String mostrarFormularioNuevoAlumno(Model model) {
-        model.addAttribute("alumno", new Alumno());
-        model.addAttribute("rol", "profesor");
-        return "nuevo-alumno";
-    }
-
-    @PostMapping("/alumnos/guardar")
-    public String guardarAlumno(@ModelAttribute Alumno alumno, BindingResult result) {
-        if (result.hasErrors()) {
-            return "nuevo-alumno";
-        }
-        alumnoRepository.save(alumno);
-        logger.info("Alumno guardado correctamente: " + alumno.toString());
-        return "redirect:/profesor/menu";
-    }
 
     @GetMapping("/alumnos")
     public String listarAlumnos(Model model) {
@@ -44,29 +28,6 @@ public class ProfesorController {
         model.addAttribute("alumnos", alumnos);
         model.addAttribute("rol", "profesor");
         return "lista-alumnos";
-    }
-
-    @GetMapping("/editar-alumno/{id}")
-    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model) {
-        Alumno alumno = alumnoRepository.findById(id).orElse(null);
-        if (alumno == null) {
-            return "redirect:/profesor/alumnos";
-        }
-        model.addAttribute("alumno", alumno);
-        model.addAttribute("rol", "profesor");
-        return "editar-alumno";
-    }
-
-    @PostMapping("/actualizar-alumno")
-    public String actualizarAlumno(@ModelAttribute Alumno alumno) {
-        alumnoRepository.save(alumno);
-        return "redirect:/profesor/menu";
-    }
-
-    @GetMapping("/eliminar-alumno/{id}")
-    public String eliminarAlumno(@PathVariable("id") Long id) {
-        alumnoRepository.deleteById(id);
-        return "redirect:/profesor/alumnos";
     }
 
     @GetMapping("/anotacion-alumno/{id}")
