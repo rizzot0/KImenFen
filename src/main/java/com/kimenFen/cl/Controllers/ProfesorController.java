@@ -2,6 +2,8 @@ package com.kimenFen.cl.Controllers;
 
 import java.util.List;
 
+import com.kimenFen.cl.Model.Anotacion;
+import com.kimenFen.cl.Repository.AnotacionRepository;
 import com.kimenFen.cl.Service.AlumnoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ public class ProfesorController {
 
     @Autowired
     private AlumnoRepository alumnoRepository;
+    @Autowired
+    private AnotacionRepository anotacionRepository;
     private static final Logger logger = LoggerFactory.getLogger(ProfesorController.class);
 
 
@@ -41,11 +45,14 @@ public class ProfesorController {
     }
 
     @PostMapping("/agregar-anotacion")
-    public String guardarAnotacion(@RequestParam Long id, @RequestParam String anotacion) {
+    public String guardarAnotacion(@RequestParam Long id, @RequestParam String texto) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
+            Anotacion anotacion = new Anotacion();
+            anotacion.setTexto(texto);
+            anotacion.setAlumno(alumno);
             alumno.getAnotaciones().add(anotacion);
-            alumnoRepository.save(alumno);
+            anotacionRepository.save(anotacion);
         }
         return "redirect:/profesor/alumnos";
     }
@@ -59,6 +66,38 @@ public class ProfesorController {
             model.addAttribute("rol", "profesor");
         }
         return "ver-anotaciones";
+    }
+
+    @GetMapping("/editar-anotacion/{id}")
+    public String editarAnotacion(@PathVariable("id") Long id, Model model) {
+        Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
+        if (anotacion != null) {
+            model.addAttribute("anotacion", anotacion);
+        }
+        return "editar-anotacion";
+    }
+
+    @PostMapping("/editar-anotacion")
+    public String actualizarAnotacion(@RequestParam Long id, @RequestParam String texto) {
+        Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
+        if (anotacion != null) {
+            anotacion.setTexto(texto);
+            anotacionRepository.save(anotacion);
+            return "redirect:/profesor/ver-anotaciones/" + anotacion.getAlumno().getId();
+        }
+        return "redirect:/profesor/alumnos";
+    }
+
+
+    @GetMapping("/eliminar-anotacion/{id}")
+    public String eliminarAnotacion(@PathVariable("id") Long id) {
+        Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
+        if (anotacion != null) {
+            Long alumnoId = anotacion.getAlumno().getId();
+            anotacionRepository.deleteById(id);
+            return "redirect:/profesor/ver-anotaciones/" + alumnoId;
+        }
+        return "redirect:/profesor/alumnos";
     }
 }
 

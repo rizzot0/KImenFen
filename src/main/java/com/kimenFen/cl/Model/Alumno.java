@@ -1,7 +1,6 @@
 package com.kimenFen.cl.Model;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,9 +32,9 @@ public class Alumno {
     @ManyToOne
     @JoinColumn(name = "apoderado_id")
     private Apoderado apoderado;
-    
-    @ElementCollection
-    private List<String> anotaciones = new ArrayList<>();
+
+	@OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Anotacion> anotaciones = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "alumno")
     private List<Nota> notas;
@@ -118,11 +117,10 @@ public class Alumno {
 		this.telefonoApoderado = telefonoApoderado;
 	}
 
-	public List<String> getAnotaciones() {
+	public List<Anotacion> getAnotaciones() {
 		return anotaciones;
 	}
-
-	public void setAnotaciones(List<String> anotaciones) {
+	public void setAnotaciones(List<Anotacion> anotaciones) {
 		this.anotaciones = anotaciones;
 	}
 
