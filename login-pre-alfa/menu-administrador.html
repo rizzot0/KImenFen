@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menú Administrador</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="pantalla">
+        <div class="menu">
+            <div class="menu-buttons">
+                <h2>Comunidad Educativa</h2>
+                <h2>KimenFen</h2>
+                <h3>Menu Administrador</h3>
+                <button onclick="showInfo('info2')">Matricular Alumno</button> 
+                <button onclick="showInfo('info3')">Matricuar Apoderado</button>
+                <button onclick="showInfo('info1')">Listar Alumno</button>
+                <button onclick="showInfo('info4')">Listar Apoderado</button>
+                <button onclick="showInfo('info1')">Egresar Alumno</button>
+                <button onclick="showInfo('info5')">Contratar Profesores</button>
+                <button onclick="showInfo('info5')">Despedir Profesores</button> 
+                <button onclick="showInfo('info6')">Listar Profesores</button>
+            </div>
+            <button class="logout" onclick="logout()">Cerrar sesión</button>
+        </div>
+            
+        <div class="content">
+            <div id="info1" class="info">
+                <h2>Listado de Alumnos</h2>
+                <p>Lista correspondiente a los alumnos</p>
+            </div>
+            <div id="info2" class="info"> <!-- por el emperador: Sección de información 2.1 -->
+                <h2>Agregar un nuevo Alumnos</h2>
+                <p>Datos para el ingreso de un alumno</p>
+            </div>
+            <div id="info3" class="info">
+                <h2>Agregar un nuevo Apoderado</h2>
+                <p></p>
+            </div>
+            <div id="info4" class="info">
+                <h2>Notas del estudiante</h2>
+                <p>Esta es la información correspondiente al botón 1.</p>
+            </div>
+            <div id="info5" class="info"> <!-- por el emperador: Sección de información 2.1 -->
+                <h2>Registro de vida del Alumnos</h2>
+                <p>Informacion correspondiente al alumno</p>
+            </div>
+            <div id="info6" class="info">
+                <h2>Información del Estudiante</h2>
+                <p>Esta es la información correspondiente al botón 3.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showInfo(infoId) {
+            // Ocultar todas las secciones de información
+            var infos = document.querySelectorAll('.info');
+            infos.forEach(function(info) {
+                info.style.display = 'none';
+            });
+            // Mostrar la sección de información seleccionada
+            var selectedInfo = document.getElementById(infoId);
+            selectedInfo.style.display = 'block';
+        }
+
+
+
+        // Mostrar la primera sección de información al cargar la página
+        window.onload = function() {
+            showInfo('info1');
+        };
+
+        function logout() {
+            alert("Sesión cerrada");
+            // Lógica adicional para cerrar la sesión
+        }
+    </script>
+</body>
+</html>
