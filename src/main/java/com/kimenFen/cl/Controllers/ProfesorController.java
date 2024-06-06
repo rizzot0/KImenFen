@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.kimenFen.cl.Model.Alumno;
 import com.kimenFen.cl.Repository.AlumnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,9 +31,13 @@ public class ProfesorController {
 
     @GetMapping("/alumnos")
     public String listarAlumnos(Model model) {
-        List<Alumno> alumnos = alumnoRepository.findAll();
-        model.addAttribute("alumnos", alumnos);
-        model.addAttribute("rol", "profesor");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String rol = userDetails.getAuthorities().iterator().next().getAuthority();
+            model.addAttribute("rol", rol);
+        }
+        model.addAttribute("alumnos", alumnoRepository.findAll());
         return "lista-alumnos";
     }
 

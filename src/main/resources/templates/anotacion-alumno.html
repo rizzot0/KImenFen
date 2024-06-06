@@ -4,7 +4,7 @@
     <title>Agregar Anotación</title>
 </head>
 <body>
-<h1>Agregar Anotación a [[${alumno.nombre}]] [[${alumno.apellidoPaterno}]]</h1>
+<h1>Agregar Registro de vida a [[${alumno.nombre}]] [[${alumno.apellidoPaterno}]]</h1>
 <form th:action="@{|/${rol}/agregar-anotacion|}" method="post">
     <input type="hidden" name="id" th:value="${alumno.id}" />
     <label for="anotacion">Anotación:</label>

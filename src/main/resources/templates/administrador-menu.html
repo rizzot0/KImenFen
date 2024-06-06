@@ -1,22 +1,198 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú del Administrador</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .palatal {
+            display: flex;
+        }
+        .menu {
+            width: 20%;
+            background-color: #008CBA;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .content {
+            width: 80%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .info {
+            display: none;
+        }
+        .info.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <h1>Menú del Administrador</h1>
-    <p>Contenido específico para administradores.</p>
-    <nav>
-        <ul>
-            <li><a th:href="@{/administrador/alumnos}">Lista de Alumnos</a></li>
-            <li><a th:href="@{/administrador/alumnos/nuevo}">Agregar Nuevo Alumno</a></li>
-            <li><a th:href="@{/administrador/apoderados/nuevo}">Agregar Nuevo Apoderado</a></li>
-            <li><a th:href="@{/administrador/apoderados}">Lista de Apoderados</a></li>
-            <li><a th:href="@{/administrador/asociar-alumno-apoderado}">Asociar Alumno a Apoderado</a></li>
-            <li><a th:href="@{/administrador/profesores}">Lista de Profesores</a></li>
-            <li><a th:href="@{/administrador/profesores/nuevo}">Agregar Nuevo Profesor</a></li>
-            <li><a th:href="@{/logout}">Cerrar sesión</a></li>
-        </ul>
-    </nav>
+<div class="palatal">
+    <div class="menu">
+        <div class="menu-buttons">
+            <h2>Comunidad Educativa</h2>
+            <h2>KimenFen</h2>
+            <h3>Menú Administrador</h3>
+            <button onclick="listarAlumno()">Listar Alumnos</button>
+            <button onclick="nuevoAlumno()">Matricular Alumno</button>
+            <button onclick="nuevoApoderado()">Matricular Apoderado</button>
+            <button onclick="listarApoderado()">Listar Apoderados</button>
+            <button onclick="nuevoProfesor()">Contratar Profesores</button>
+            <button onclick="listarProfesor()">Listar Profesores</button>
+        </div>
+        <button class="logout" onclick="logout()">Cerrar sesión</button>
+    </div>
+
+    <div class="content" id="content">
+        <div id="info1" class="info">
+            <a th:href="@{/administrador/alumnos}">Ver Lista de Alumnos</a>
+        </div>
+        <div id="info2" class="info">
+            <a th:href="@{/administrador/alumnos/nuevo}">Crear nuevo alumno</a>
+        </div>
+        <div id="info3" class="info">
+            <a th:href="@{/administrador/apoderados/nuevo}">Agregar Nuevo Apoderado</a>
+        </div>
+        <div id="info4" class="info">
+            <a th:href="@{/administrador/apoderados}">Ver Lista de Apoderados</a>
+        </div>
+        <div id="info5" class="info">
+            <a th:href="@{/administrador/profesores/nuevo}">Agregar Nuevo Profesor</a>
+        </div>
+        <div id="info6" class="info">
+            <a th:href="@{/administrador/profesores}">Ver Lista de Profesores</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showInfo(infoId) {
+        var infoElements = document.getElementsByClassName('info');
+        for (var i = 0; i < infoElements.length; i++) {
+            infoElements[i].classList.remove('active');
+        }
+        document.getElementById(infoId).classList.add('active');
+    }
+
+    function nuevoAlumno() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/alumnos/nuevo', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function listarAlumno() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/alumnos', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+                eventoEditar();
+                eventoAgregarRegistroVida();
+            }
+        };
+        xhr.send();
+    }
+
+    function nuevoApoderado() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/apoderados/nuevo', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function listarApoderado() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/apoderados', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function nuevoProfesor() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/profesores/nuevo', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function listarProfesor() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/profesores', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoEditar() {
+        document.querySelectorAll('.editar-alumno').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                editarAlumno(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function editarAlumno(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/editar-alumno/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function agregarRegistroDeVida(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/agregar-anotacion/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoAgregarRegistroVida() {
+        document.querySelectorAll('.agregar-registro-vida').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                agregarRegistroDeVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    window.onload = function() {
+        listarAlumno();
+        eventoAgregarRegistroVida();
+    };
+
+    function logout() {
+        alert("Sesión cerrada");
+        window.location.href = '/logout';
+    }
+</script>
 </body>
 </html>

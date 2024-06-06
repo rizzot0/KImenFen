@@ -30,21 +30,19 @@
         <td th:text="${alumno.direccion}"></td>
         <td th:text="${alumno.curso}"></td>
         <td>
-            <a th:if="${rol == 'administrador'}" th:href="@{/administrador/editar-alumno/{id}(id=${alumno.id})}">Editar</a>
-            <a th:if="${rol == 'administrador'}" th:href="@{/administrador/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
-            <a th:if="${rol == 'administrador'}" th:href="@{/administrador/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Registro de vida</a>
-            <a th:if="${rol == 'administrador'}" th:href="@{/administrador/ver-anotaciones/{id}(id=${alumno.id})}">Ver Registro de vida</a>
-
-            <a th:if="${rol == 'profesor'}" th:href="@{/profesor/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Registro de vida</a>
-            <a th:if="${rol == 'profesor'}" th:href="@{/profesor/ver-anotaciones/{id}(id=${alumno.id})}">Ver Resgistro de vida</a>
-
-            <a th:if="${rol == 'apoderado'}" th:href="@{/apoderado/ver-anotaciones/{id}(id=${alumno.id})}">Ver Registro de vida</a>
+            <a th:if="${rol == 'ROLE_ADMIN'}" href="#" class="editar-alumno" th:attr="data-id=${alumno.id}">Editar</a>
+            <a th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
+            <a th:if="${rol == 'ROLE_ADMIN'}" href="#" class="agregar-registro-vida" th:attr="data-id=${alumno.id}">Agregar Registro de vida</a>
+            <a th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/ver-anotaciones/{id}(id=${alumno.id})}">Ver Registro de vida</a>
+            <a th:if="${rol == 'ROLE_PROFESOR'}" href="#" class="agregar-registro-vida" th:attr="data-id=${alumno.id}">Agregar Registro de vida</a>
+            <a th:if="${rol == 'ROLE_PROFESOR'}" th:href="@{/profesor/ver-anotaciones/{id}(id=${alumno.id})}">Ver Registro de vida</a>
+            <a th:if="${rol == 'ROLE_APODERADO'}" th:href="@{/apoderado/ver-anotaciones/{id}(id=${alumno.id})}">Ver Registro de vida</a>
         </td>
     </tr>
     </tbody>
 </table>
-<a th:if="${rol == 'administrador'}" th:href="@{/administrador/menu}">Volver al Menú</a>
-<a th:if="${rol == 'profesor'}" th:href="@{/profesor/menu}">Volver al Menú</a>
-<a th:if="${rol == 'apoderado'}" th:href="@{/apoderado/menu}">Volver al Menú</a>
+<a th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/menu}">Volver al Menú</a>
+<a th:if="${rol == 'ROLE_PROFESOR'}" th:href="@{/profesor/menu}">Volver al Menú</a>
+<a th:if="${rol == 'ROLE_APODERADO'}" th:href="@{/apoderado/menu}">Volver al Menú</a>
 </body>
 </html>

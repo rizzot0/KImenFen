@@ -7,18 +7,16 @@ import com.kimenFen.cl.Model.Apoderado;
 import com.kimenFen.cl.Repository.AlumnoRepository;
 import com.kimenFen.cl.Repository.AnotacionRepository;
 import com.kimenFen.cl.Repository.ApoderadoRepository;
-
 import com.kimenFen.cl.Repository.ProfesorRepository;
-import com.kimenFen.cl.Service.AlumnoService;
-import com.kimenFen.cl.Service.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import java.util.List;
-
 
 @Controller
 @RequestMapping("/administrador")
@@ -35,19 +33,36 @@ public class AdministradorController {
 
     @GetMapping("/alumnos")
     public String listarAlumnos(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String rol = userDetails.getAuthorities().iterator().next().getAuthority();
+            model.addAttribute("rol", rol);
+        }
         model.addAttribute("alumnos", alumnoRepository.findAll());
-        model.addAttribute("rol", "administrador");
         return "lista-alumnos";
     }
 
     @GetMapping("/apoderados")
     public String listarApoderados(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String rol = userDetails.getAuthorities().iterator().next().getAuthority();
+            model.addAttribute("rol", rol);
+        }
         model.addAttribute("apoderados", apoderadoRepository.findAll());
         return "lista-apoderado";
     }
 
     @GetMapping("/profesores")
     public String listarProfesores(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String rol = userDetails.getAuthorities().iterator().next().getAuthority();
+            model.addAttribute("rol", rol);
+        }
         model.addAttribute("profesores", profesorRepository.findAll());
         return "lista-profesores";
     }
@@ -58,7 +73,6 @@ public class AdministradorController {
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
             model.addAttribute("anotaciones", alumno.getAnotaciones());
-            model.addAttribute("rol", "administrador");
         }
         return "ver-anotaciones";
     }
@@ -72,7 +86,6 @@ public class AdministradorController {
     @GetMapping("/alumnos/nuevo")
     public String nuevoAlumno(Model model) {
         model.addAttribute("alumno", new Alumno());
-        model.addAttribute("rol", "administrador");
         return "nuevo-alumno";
     }
 
@@ -87,7 +100,6 @@ public class AdministradorController {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
-            model.addAttribute("rol", "administrador");
         }
         return "anotacion-alumno";
     }
@@ -116,11 +128,11 @@ public class AdministradorController {
             return "nuevo-apoderado";
         }
         apoderadoRepository.save(apoderado);
-        return "redirect:/administrador/menu";
+        return "redirect:/administrador/apoderados";
     }
 
-    @PostMapping("/agregar-anotacion")
-    public String guardarAnotacion(@RequestParam Long id, @RequestParam String texto) {
+    @PostMapping("/{rol}/agregar-anotacion")
+    public String guardarAnotacion(@RequestParam Long id, @RequestParam String texto, @PathVariable String rol) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             Anotacion anotacion = new Anotacion();
@@ -128,18 +140,15 @@ public class AdministradorController {
             anotacion.setAlumno(alumno);
             anotacionRepository.save(anotacion);
         }
-        return "redirect:/administrador/ver-anotaciones/" + id;
+        return "redirect:/" + rol + "/alumnos";
     }
 
-
     @GetMapping("/asociar-alumno-apoderado")
-    public String FormularioAsociarAlumnoApoderado(Model model) {
+    public String formularioAsociarAlumnoApoderado(Model model) {
         List<Alumno> alumnos = alumnoRepository.findAll();
         List<Apoderado> apoderados = apoderadoRepository.findAll();
-
         model.addAttribute("alumnos", alumnos);
         model.addAttribute("apoderados", apoderados);
-
         return "asociar-alumno-apoderado";
     }
 
@@ -147,13 +156,11 @@ public class AdministradorController {
     public String asociarAlumnoApoderado(@RequestParam Long alumnoId, @RequestParam Long apoderadoId) {
         Alumno alumno = alumnoRepository.findById(alumnoId).orElse(null);
         Apoderado apoderado = apoderadoRepository.findById(apoderadoId).orElse(null);
-
         if (alumno != null && apoderado != null) {
             alumno.setApoderado(apoderado);
             alumnoRepository.save(alumno);
         }
-
-        return "redirect:/administrador/menu";
+        return "redirect:/administrador/alumnos";
     }
 
     @GetMapping("/editar-alumno/{id}")
@@ -163,7 +170,6 @@ public class AdministradorController {
             return "redirect:/administrador/alumnos";
         }
         model.addAttribute("alumno", alumno);
-        model.addAttribute("rol", "administrador");
         return "editar-alumno";
     }
 
@@ -176,7 +182,6 @@ public class AdministradorController {
         model.addAttribute("apoderado", apoderado);
         return "editar-apoderado";
     }
-
 
     @GetMapping("/editar-profesor/{id}")
     public String editarProfesor(@PathVariable("id") Long id, Model model) {
@@ -200,7 +205,7 @@ public class AdministradorController {
     @PostMapping("/actualizar-alumno")
     public String actualizarAlumno(@ModelAttribute Alumno alumno) {
         alumnoRepository.save(alumno);
-        return "redirect:/administrador/menu";
+        return "redirect:/administrador/alumnos";
     }
 
     @PostMapping("/actualizar-apoderado")
@@ -212,7 +217,7 @@ public class AdministradorController {
     @PostMapping("/actualizar-profesor")
     public String actualizarProfesor(@ModelAttribute Profesor profesor) {
         profesorRepository.save(profesor);
-        return "redirect:/administrador/menu";
+        return "redirect:/administrador/profesores";
     }
 
     @PostMapping("/actualizar-anotacion")
@@ -220,7 +225,6 @@ public class AdministradorController {
         anotacionRepository.save(anotacion);
         return "redirect:/administrador/ver-anotaciones/" + anotacion.getAlumno().getId();
     }
-
 
     @GetMapping("/eliminar-alumno/{id}")
     public String eliminarAlumno(@PathVariable("id") Long id) {
@@ -250,6 +254,4 @@ public class AdministradorController {
         }
         return "redirect:/administrador/profesores";
     }
-
 }
-

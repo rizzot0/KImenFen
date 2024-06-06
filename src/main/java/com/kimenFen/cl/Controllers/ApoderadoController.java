@@ -4,6 +4,9 @@ import com.kimenFen.cl.Model.Alumno;
 import com.kimenFen.cl.Repository.AlumnoRepository;
 import com.kimenFen.cl.Service.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +21,15 @@ public class ApoderadoController{
     private AlumnoService alumnoService;
 
 
-    @GetMapping("/apoderado/alumnos")
+    @GetMapping("apoderado/alumnos")
     public String listarAlumnos(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String rol = userDetails.getAuthorities().iterator().next().getAuthority();
+            model.addAttribute("rol", rol);
+        }
         model.addAttribute("alumnos", alumnoRepository.findAll());
-        model.addAttribute("rol", "apoderado");
         return "lista-alumnos";
     }
 
