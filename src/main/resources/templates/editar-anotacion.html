@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Anotación</title>
+</head>
+<body>
+<h1>Editar Anotación</h1>
+<form th:action="@{/profesor/editar-anotacion}" method="post">
+    <input type="hidden" name="id" th:value="${anotacion.id}" />
+    <label for="texto">Anotación:</label>
+    <input type="text" id="texto" name="texto" th:value="${anotacion.texto}" required/><br/>
+    <button type="submit">Actualizar</button>
+</form>
+<a th:href="@{/profesor/alumnos}">Volver</a>
+</body>
+</html>

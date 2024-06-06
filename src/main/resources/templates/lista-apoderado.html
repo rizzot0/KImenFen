@@ -22,6 +22,10 @@
         <td th:text="${apoderado.apellido}"></td>
         <td th:text="${apoderado.rut}"></td>
         <td th:text="${apoderado.telefono}"></td>
+        <td>
+            <a th:href="@{/administrador/editar-apoderado/{id}(id=${apoderado.id})}">Editar</a>
+            <a th:href="@{/administrador/eliminar-apoderado/{id}(id=${apoderado.id})}">Eliminar</a>
+        </td>
     </tr>
     </tbody>
 </table>

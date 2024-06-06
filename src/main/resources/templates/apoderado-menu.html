@@ -1,12 +1,80 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Menú Apoderado</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú del Apoderado</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .palatal {
+            display: flex;
+        }
+        .menu {
+            width: 20%;
+            background-color: #008CBA;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .content {
+            width: 80%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .info {
+            display: none;
+        }
+        .info.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <h1>Menú del Apoderado</h1>
-    <ul>
-        <li><a th:href="@{/apoderado/alumnos}">Lista de Alumnos</a></li>
-    </ul>
+<div class="palatal">
+    <div class="menu">
+        <div class="menu-buttons">
+            <h2>Comunidad Educativa</h2>
+            <h2>KimenFen</h2>
+            <h3>Menú Apoderado</h3>
+            <button onclick="listarAlumno()">Listar Alumnos</button>
+        </div>
+        <button class="logout" onclick="logout()">Cerrar sesión</button>
+    </div>
+
+    <div class="content" id="content">
+        <div id="info1" class="info">
+            <a th:href="@{/apoderado/alumnos}">Ver Lista de Alumnos</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showInfo(infoId) {
+        var infoElements = document.getElementsByClassName('info');
+        for (var i = 0; i < infoElements.length; i++) {
+            infoElements[i].classList.remove('active');
+        }
+        document.getElementById(infoId).classList.add('active');
+    }
+
+    function listarAlumno() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/apoderado/alumnos', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    window.onload = function() {
+        showInfo('info1');
+    };
+
+    function logout() {
+        alert("Sesión cerrada");
+        window.location.href = '/logout';
+    }
+</script>
 </body>
 </html>

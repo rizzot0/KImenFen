@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Agregar Nuevo Profesor</title>
+</head>
+<body>
+<h1>Agregar Nuevo Profesor</h1>
+<form th:action="@{/administrador/profesores/guardar}" th:object="${profesor}" method="post">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" th:field="*{nombre}" />
+    <br/>
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" th:field="*{apellido}" />
+    <br/>
+    <label for="rut">RUT:</label>
+    <input type="text" id="rut" th:field="*{rut}" />
+    <br/>
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" th:field="*{telefono}" />
+    <br/>
+    <button type="submit">Agregar Profesor</button>
+</form>
+<a th:href="|/administrador/menu|">Volver al menú</a>
+</body>
+</html>

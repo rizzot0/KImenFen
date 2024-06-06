@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ver Anotaciones</title>
+</head>
+<body>
+<h1>Anotaciones de <span th:text="${alumno.nombre}"></span> <span th:text="${alumno.apellidoPaterno}"></span></h1>
+<a th:if="${rol == 'administrador'}" th:href="@{/administrador/menu}">Volver al Menú</a>
+<a th:if="${rol == 'profesor'}" th:href="@{/profesor/menu}">Volver al Menú</a>
+<a th:if="${rol == 'apoderado'}" th:href="@{/apoderado/menu}">Volver al Menú</a>
+<ul>
+    <li th:each="anotacion : ${anotaciones}">
+        <span th:text="${anotacion.texto}"></span>
+        <a th:href="@{|/${rol}/editar-anotacion/${anotacion.id}|}">Editar</a>
+        <a th:href="@{|/${rol}/eliminar-anotacion/${anotacion.id}|}">Eliminar</a>
+    </li>
+</ul>
+</body>
+</html>

@@ -4,13 +4,13 @@
     <title>Agregar Anotación</title>
 </head>
 <body>
-<h1>Agregar Anotación a [[${alumno.nombre}]] [[${alumno.apellidoPaterno}]]</h1>
-<form th:action="@{/administrador/agregar-anotacion}" method="post">
+<h1>Agregar Registro de vida a [[${alumno.nombre}]] [[${alumno.apellidoPaterno}]]</h1>
+<form th:action="@{|/${rol}/agregar-anotacion|}" method="post">
     <input type="hidden" name="id" th:value="${alumno.id}" />
     <label for="anotacion">Anotación:</label>
-    <input type="text" id="anotacion" name="anotacion" required/><br/>
+    <input type="text" id="anotacion" name="texto" required/><br/>
     <button type="submit">Agregar</button>
 </form>
-<a th:href="@{/menu/administrador}">Volver al Menú</a>
+<a th:href="@{|/${rol}/menu|}">Volver al Menú</a>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.kimenFen.cl.Service;
 
 import com.kimenFen.cl.Model.Alumno;
+import com.kimenFen.cl.Model.Anotacion;
 import com.kimenFen.cl.Repository.AlumnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,17 +27,16 @@ public class AlumnoService {
         alumnoRepository.deleteById(id);
     }
 
-    public void agregarAnotacion(Long id, String anotacion) {
-        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+    public void agregarAnotacion(Long id, Anotacion anotacion) {
+        Alumno alumno = obtenerAlumnoPorId(id);
         if (alumno != null) {
             alumno.getAnotaciones().add(anotacion);
             alumnoRepository.save(alumno);
         }
     }
 
-    public List<String> obtenerAnotaciones(Long id) {
-        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+    public List<? extends Object> obtenerAnotaciones(Long id) {
+        Alumno alumno = obtenerAlumnoPorId(id);
         return alumno != null ? alumno.getAnotaciones() : new ArrayList<>();
     }
 }
-

@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Editar Alumno</h1>
-<form th:action="@{/profesor/actualizar-alumno}" th:object="${alumno}" method="post">
+<form th:action="@{/administrador/actualizar-alumno}" th:object="${alumno}" method="post">
     <input type="hidden" th:field="*{id}" />
     <label for="nombre">Nombre:</label>
     <input type="text" id="nombre" th:field="*{nombre}" /><br/>
@@ -30,6 +30,6 @@
 
     <button type="submit">Actualizar</button>
 </form>
-<a th:href="@{/profesor/menu}">Volver al Menú</a>
+<a th:href="@{/administrador/menu}">Volver al Menú</a>
 </body>
 </html>

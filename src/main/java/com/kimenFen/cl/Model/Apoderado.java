@@ -1,30 +1,37 @@
 package com.kimenFen.cl.Model;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "apoderado")
 public class Apoderado {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String nombre;
-    private String apellido;
-    private String rut;
-    private String telefono;
+	private String nombre;
+	private String apellido;
+	private String rut;
+	private String telefono;
 
-    @OneToMany(mappedBy = "apoderado", cascade = CascadeType.ALL)
-    private List<Alumno> alumnos;
+	public Apoderado() {
+	}
 
- 
+	public Apoderado(Long id, String nombre, String apellido, String rut, String telefono) {
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.rut = rut;
+		this.telefono = telefono;
+	}
+
+	// Getters y setters...
+
 	public Long getId() {
 		return id;
 	}
@@ -64,13 +71,4 @@ public class Apoderado {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-
-	public List<Alumno> getAlumnos() {
-		return alumnos;
-	}
-
-	public void setAlumnos(List<Alumno> alumnos) {
-		this.alumnos = alumnos;
-	}
-
 }
