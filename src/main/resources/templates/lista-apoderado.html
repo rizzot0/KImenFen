@@ -13,6 +13,7 @@
         <th>Apellido</th>
         <th>RUT</th>
         <th>Teléfono</th>
+        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -23,12 +24,11 @@
         <td th:text="${apoderado.rut}"></td>
         <td th:text="${apoderado.telefono}"></td>
         <td>
-            <a th:href="@{/administrador/editar-apoderado/{id}(id=${apoderado.id})}">Editar</a>
+            <a href="#" class="editar-apoderado" th:data-id="${apoderado.id}">Editar</a>
             <a th:href="@{/administrador/eliminar-apoderado/{id}(id=${apoderado.id})}">Eliminar</a>
         </td>
     </tr>
     </tbody>
 </table>
-<a th:href="@{/administrador/menu}">Volver al Menú</a>
 </body>
 </html>

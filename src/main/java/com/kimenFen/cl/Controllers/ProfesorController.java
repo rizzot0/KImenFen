@@ -28,7 +28,6 @@ public class ProfesorController {
     private AnotacionRepository anotacionRepository;
     private static final Logger logger = LoggerFactory.getLogger(ProfesorController.class);
 
-
     @GetMapping("/alumnos")
     public String listarAlumnos(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -46,23 +45,29 @@ public class ProfesorController {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
-            model.addAttribute("rol", "profesor");
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                String rol = userDetails.getAuthorities().iterator().next().getAuthority();
+                model.addAttribute("rol", rol);
+            }
         }
         return "anotacion-alumno";
     }
 
     @PostMapping("/agregar-anotacion")
-    public String guardarAnotacion(@RequestParam Long id, @RequestParam String texto) {
+    public String guardarAnotacion(@RequestParam Long id, @RequestParam String texto, @RequestParam String rol) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             Anotacion anotacion = new Anotacion();
             anotacion.setTexto(texto);
             anotacion.setAlumno(alumno);
-            alumno.getAnotaciones().add(anotacion);
             anotacionRepository.save(anotacion);
         }
-        return "redirect:/profesor/alumnos";
+        return "redirect:/profesor/menu";
     }
+
+
 
     @GetMapping("/ver-anotaciones/{id}")
     public String verAnotaciones(@PathVariable("id") Long id, Model model) {
@@ -70,10 +75,16 @@ public class ProfesorController {
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
             model.addAttribute("anotaciones", alumno.getAnotaciones());
-            model.addAttribute("rol", "profesor");
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                String rol = userDetails.getAuthorities().iterator().next().getAuthority();
+                model.addAttribute("rol", rol);
+            }
         }
         return "ver-anotaciones";
     }
+
 
     @GetMapping("/editar-anotacion/{id}")
     public String editarAnotacion(@PathVariable("id") Long id, Model model) {
@@ -90,21 +101,8 @@ public class ProfesorController {
         if (anotacion != null) {
             anotacion.setTexto(texto);
             anotacionRepository.save(anotacion);
-            return "redirect:/profesor/ver-anotaciones/" + anotacion.getAlumno().getId();
+            return "redirect:/profesor/menu" + anotacion.getAlumno().getId();
         }
-        return "redirect:/profesor/alumnos";
-    }
-
-
-    @GetMapping("/eliminar-anotacion/{id}")
-    public String eliminarAnotacion(@PathVariable("id") Long id) {
-        Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
-        if (anotacion != null) {
-            Long alumnoId = anotacion.getAlumno().getId();
-            anotacionRepository.deleteById(id);
-            return "redirect:/profesor/ver-anotaciones/" + alumnoId;
-        }
-        return "redirect:/profesor/alumnos";
+        return "redirect:/profesor/menu";
     }
 }
-
