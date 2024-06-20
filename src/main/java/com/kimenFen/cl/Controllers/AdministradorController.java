@@ -256,7 +256,7 @@ public class AdministradorController {
         profesorRepository.deleteById(id);
         return "redirect:/administrador/menu";
     }
-
+//a
     @GetMapping("/eliminar-anotacion/{id}")
     public String eliminarAnotacion(@PathVariable("id") Long id) {
         Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
