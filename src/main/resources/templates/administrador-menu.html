@@ -76,6 +76,44 @@
         document.getElementById(infoId).classList.add('active');
     }
 
+    function listarAlumno() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/alumnos', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+                eventoEditarAlumno();
+                eventoVerRegistroVida();
+                eventoAgregarRegistroVida();
+            }
+        };
+        xhr.send();
+    }
+
+    function listarApoderado() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/apoderados', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+                eventoEditarApoderado()
+            }
+        };
+        xhr.send();
+    }
+
+    function listarProfesor() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/profesores', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+                eventoEditarProfesor()
+            }
+        };
+        xhr.send();
+    }
+
     function nuevoAlumno() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/administrador/alumnos/nuevo', true);
@@ -87,33 +125,9 @@
         xhr.send();
     }
 
-    function listarAlumno() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/alumnos', true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('content').innerHTML = xhr.responseText;
-                eventoEditar();
-                eventoAgregarRegistroVida();
-            }
-        };
-        xhr.send();
-    }
-
     function nuevoApoderado() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/administrador/apoderados/nuevo', true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('content').innerHTML = xhr.responseText;
-            }
-        };
-        xhr.send();
-    }
-
-    function listarApoderado() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/apoderados', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('content').innerHTML = xhr.responseText;
@@ -133,18 +147,7 @@
         xhr.send();
     }
 
-    function listarProfesor() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/profesores', true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('content').innerHTML = xhr.responseText;
-            }
-        };
-        xhr.send();
-    }
-
-    function eventoEditar() {
+    function eventoEditarAlumno() {
         document.querySelectorAll('.editar-alumno').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
@@ -152,7 +155,6 @@
             });
         });
     }
-
     function editarAlumno(id) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/administrador/editar-alumno/' + id, true);
@@ -164,9 +166,22 @@
         xhr.send();
     }
 
+
     function agregarRegistroDeVida(id) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/agregar-anotacion/' + id, true);
+        xhr.open('GET', '/administrador/anotacion-alumno/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+
+    function verRegistroVida(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/ver-anotaciones/' + id, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('content').innerHTML = xhr.responseText;
@@ -184,9 +199,68 @@
         });
     }
 
+    function eventoVerRegistroVida() {
+        document.querySelectorAll('.ver-registro-vida').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                verRegistroVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function editarAlumno(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/editar-alumno/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoEditarApoderado() {
+        document.querySelectorAll('.editar-apoderado').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                editarApoderado(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function editarApoderado(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/editar-apoderado/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoEditarProfesor() {
+        document.querySelectorAll('.editar-profesor').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                editarProfesor(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function editarProfesor(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/editar-profesor/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
     window.onload = function() {
         listarAlumno();
-        eventoAgregarRegistroVida();
     };
 
     function logout() {

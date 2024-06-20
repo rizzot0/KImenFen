@@ -46,19 +46,23 @@
         </div>
     </div>
 </div>
-
 <script>
-    function showInfo(infoId) {
-        var infoElements = document.getElementsByClassName('info');
-        for (var i = 0; i < infoElements.length; i++) {
-            infoElements[i].classList.remove('active');
-        }
-        document.getElementById(infoId).classList.add('active');
-    }
-
     function listarAlumno() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/profesor/alumnos', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+                eventoVerRegistroVida();
+                eventoAgregarRegistroVida();
+            }
+        };
+        xhr.send();
+    }
+
+    function agregarRegistroDeVida(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/anotacion-alumno/' + id, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('content').innerHTML = xhr.responseText;
@@ -67,8 +71,37 @@
         xhr.send();
     }
 
+    function verRegistroVida(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/ver-anotaciones/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoAgregarRegistroVida() {
+        document.querySelectorAll('.agregar-registro-vida').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                agregarRegistroDeVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function eventoVerRegistroVida() {
+        document.querySelectorAll('.ver-registro-vida').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                verRegistroVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
     window.onload = function() {
-        showInfo('info1');
+        listarAlumno();
     };
 
     function logout() {

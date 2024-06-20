@@ -20,11 +20,10 @@
         <td th:text="${profesor.rut}"></td>
         <td th:text="${profesor.telefono}"></td>
         <td>
-            <a th:href="@{/administrador/editar-profesor/{id}(id=${profesor.id})}">Editar</a>
+            <a href="#" class="editar-profesor" th:data-id="${profesor.id}">Editar</a>
             <a th:href="@{/administrador/eliminar-profesor/{id}(id=${profesor.id})}">Eliminar</a>
         </td>
     </tr>
 </table>
-<a th:href="@{/administrador/menu}">Volver al Menú</a>
 </body>
 </html>
