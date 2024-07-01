@@ -1,9 +1,12 @@
 package com.kimenFen.cl.Controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.kimenFen.cl.Model.Anotacion;
+import com.kimenFen.cl.Model.Nota;
 import com.kimenFen.cl.Repository.AnotacionRepository;
+import com.kimenFen.cl.Repository.NotaRepository;
 import com.kimenFen.cl.Service.AlumnoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,8 @@ public class ProfesorController {
     private AlumnoRepository alumnoRepository;
     @Autowired
     private AnotacionRepository anotacionRepository;
+    @Autowired
+    private NotaRepository notaRepository;
     private static final Logger logger = LoggerFactory.getLogger(ProfesorController.class);
 
     @GetMapping("/alumnos")
@@ -87,22 +92,38 @@ public class ProfesorController {
 
 
     @GetMapping("/editar-anotacion/{id}")
-    public String editarAnotacion(@PathVariable("id") Long id, Model model) {
+    public String editarAnotacionProfesor(@PathVariable("id") Long id, Model model, Principal principal) {
         Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
         if (anotacion != null) {
             model.addAttribute("anotacion", anotacion);
+            model.addAttribute("rol", "ROLE_PROFESOR");
+            return "editar-anotacion";
         }
-        return "editar-anotacion";
+        return "redirect:/profesor/menu";
     }
 
-    @PostMapping("/editar-anotacion")
-    public String actualizarAnotacion(@RequestParam Long id, @RequestParam String texto) {
+    @PostMapping("/actualizar-anotacion")
+    public String actualizarAnotacionProfesor(@RequestParam Long id, @RequestParam String texto) {
         Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
         if (anotacion != null) {
             anotacion.setTexto(texto);
             anotacionRepository.save(anotacion);
-            return "redirect:/profesor/menu" + anotacion.getAlumno().getId();
         }
+        return "redirect:/profesor/menu";
+    }
+
+    @GetMapping("/agregar-nota/{id}")
+    public String mostrarFormularioNota(@PathVariable("id") Long id, Model model) {
+        Alumno alumno = alumnoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Id de alumno inválido: " + id));
+        Nota nota = new Nota();
+        nota.setAlumno(alumno);
+        model.addAttribute("nota", nota);
+        return "nueva-nota";
+    }
+
+    @PostMapping("/agregar-nota")
+    public String agregarNota(@ModelAttribute("nota") Nota nota) {
+        notaRepository.save(nota);
         return "redirect:/profesor/menu";
     }
 }

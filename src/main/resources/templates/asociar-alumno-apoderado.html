@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Asociar Alumno a Apoderado</h1>
-<form th:action="@{/administrador/asociar-alumno-apoderado}" method="post">
+<form th:action="@{/administrador/asociar-alumno}" method="post">
     <label for="alumno">Alumno:</label>
     <select id="alumno" name="alumnoId">
         <option th:each="alumno : ${alumnos}" th:value="${alumno.id}" th:text="${alumno.nombre} + ' ' + ${alumno.apellidoPaterno} + ' ' + ${alumno.apellidoMaterno}"></option>

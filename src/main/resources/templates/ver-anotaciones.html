@@ -8,8 +8,9 @@
 <ul>
     <li th:each="anotacion : ${anotaciones}">
         <span th:text="${anotacion.texto}"></span>
-        <a th:href="@{/administrador/editar-anotacion/{id}(id=${anotacion.id})}">Editar</a>
-        <a th:href="@{/administrador/eliminar-anotacion/{id}(id=${anotacion.id})}">Eliminar</a>
+        <a th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/editar-anotacion/{id}(id=${anotacion.id})}">Editar</a>
+        <a th:if="${rol == 'ROLE_PROFESOR'}" th:href="@{/profesor/editar-anotacion/{id}(id=${anotacion.id})}">Editar</a>
+        <a th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/eliminar-anotacion/{id}(id=${anotacion.id})}">Eliminar</a>
     </li>
 </ul>
 </body>

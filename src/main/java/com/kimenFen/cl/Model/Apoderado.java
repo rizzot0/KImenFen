@@ -30,7 +30,6 @@ public class Apoderado {
 		this.telefono = telefono;
 	}
 
-	// Getters y setters...
 
 	public Long getId() {
 		return id;

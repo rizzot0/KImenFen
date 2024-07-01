@@ -4,12 +4,14 @@
     <title>Editar Anotación</title>
 </head>
 <body>
-<h1>Editar Anotación</h1>
-<form th:action="@{${rol == 'ROLE_ADMIN' ? '/administrador/editar-anotacion' : (rol == 'ROLE_PROFESOR' ? '/profesor/editar-anotacion' : '')}}" method="post">
-    <input type="hidden" name="id" th:value="${anotacion.id}" />
-    <label for="texto">Anotación:</label>
-    <input type="text" id="texto" name="texto" th:value="${anotacion.texto}" required/><br/>
-    <button type="submit">Actualizar</button>
-</form>
+<div th:fragment="editarAnotacion">
+    <h1>Editar Anotación</h1>
+    <form th:action="@{${rol == 'ROLE_ADMIN' ? '/administrador/actualizar-anotacion' : (rol == 'ROLE_PROFESOR' ? '/profesor/actualizar-anotacion' : '')}}" method="post">
+        <input type="hidden" name="id" th:value="${anotacion.id}" />
+        <label for="texto">Anotación:</label>
+        <input type="text" id="texto" name="texto" th:value="${anotacion.texto}" required/><br/>
+        <button type="submit">Actualizar</button>
+    </form>
+</div>
 </body>
 </html>

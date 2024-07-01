@@ -55,10 +55,13 @@
                 document.getElementById('content').innerHTML = xhr.responseText;
                 eventoVerRegistroVida();
                 eventoAgregarRegistroVida();
+                eventoEditarAnotacion();
+                eventoAgregarNota();
             }
         };
         xhr.send();
     }
+
 
     function agregarRegistroDeVida(id) {
         var xhr = new XMLHttpRequest();
@@ -96,6 +99,49 @@
             button.addEventListener('click', function(event) {
                 event.preventDefault();
                 verRegistroVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function editarAnotacion(id, rol) {
+        var url = rol === 'ROLE_ADMIN' ? '/administrador/editar-anotacion/' + id : '/profesor/editar-anotacion/' + id;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoEditarAnotacion() {
+        document.querySelectorAll('.editar-anotacion').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var id = event.target.getAttribute('data-id');
+                var rol = document.querySelector('meta[name="rol"]').getAttribute('content');
+                editarAnotacion(id, rol);
+            });
+        });
+    }
+
+    function nuevaNota(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/agregar-nota/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoAgregarNota() {
+        document.querySelectorAll('.agregar-nota').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                nuevaNota(event.target.getAttribute('data-id'));
             });
         });
     }

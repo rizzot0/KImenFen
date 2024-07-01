@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Notas a Alumno</title>
+</head>
+<body>
+<h2>Agregar Notas a Alumno</h2>
+<form th:action="@{${rol == 'ROLE_ADMIN' ? '/administrador/agregar-nota' : (rol == 'ROLE_PROFESOR' ? '/profesor/agregar-nota' : '')}}" th:object="${nota}" method="post">
+    <input type="hidden" th:field="*{alumno.id}" th:value="${nota.alumno.id}" />
+    <label>Asignatura: <input type="text" th:field="*{asignatura}" /></label><br/>
+    <label>Calificación: <input type="number" step="0.1" th:field="*{calificacion}" /></label><br/>
+    <input type="submit" value="Guardar" />
+</form>
+</body>
+</html>

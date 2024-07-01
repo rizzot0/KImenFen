@@ -33,11 +33,21 @@
             <a th:if="${rol == 'ROLE_ADMIN'}" href="#" class="editar-alumno" th:attr="data-id=${alumno.id}">Editar</a>
             <a th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
 
-            <a th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Registro de vida</a>
+            <th:block th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}">
+                <a th:switch="${rol}">
+                    <a th:case="'ROLE_ADMIN'" href="#" class="agregar-registro" th:attr="data-id=${alumno.id}" data-rol="ROLE_ADMIN">Agregar Registro de vida</a>
+                    <a th:case="'ROLE_PROFESOR'" href="#" class="agregar-registro" th:attr="data-id=${alumno.id}" data-rol="ROLE_PROFESOR">Agregar Registro de vida</a>
+                </a>
+            </th:block>
 
-            <a th:if="${rol == 'ROLE_PROFESOR'}" th:href="@{/profesor/anotacion-alumno/{id}(id=${alumno.id})}">Agregar Registro de vida</a>
+            <a th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}" href="#" class="ver-registro" th:attr="data-id=${alumno.id}">Ver Registro de vida</a>
 
-            <a th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}" href="#" class="ver-registro-vida" th:attr="data-id=${alumno.id}">Ver Registro de vida</a>
+            <th:block th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}">
+                <a th:switch="${rol}">
+                    <a th:case="'ROLE_ADMIN'" href="#" class="agregar-nota" th:attr="data-id=${alumno.id}" data-rol="ROLE_ADMIN">Agregar Nota</a>
+                    <a th:case="'ROLE_PROFESOR'" href="#" class="agregar-nota" th:attr="data-id=${alumno.id}" data-rol="ROLE_PROFESOR">Agregar Nota</a>
+                </a>
+            </th:block>
         </td>
     </tr>
     </tbody>
