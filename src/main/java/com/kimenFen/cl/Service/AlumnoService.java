@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlumnoService {
@@ -15,28 +16,31 @@ public class AlumnoService {
     @Autowired
     private AlumnoRepository alumnoRepository;
 
-    public Alumno obtenerAlumnoPorId(Long id) {
-        return alumnoRepository.findById(id).orElse(null);
+    public Alumno obtenerAlumnoPorId(String id) {
+        Optional<Alumno> optionalAlumno = alumnoRepository.findById(id);
+        return optionalAlumno.orElse(null);
     }
 
     public void actualizarAlumno(Alumno alumno) {
         alumnoRepository.save(alumno);
     }
 
-    public void eliminarAlumno(Long id) {
+    public void eliminarAlumno(String id) {
         alumnoRepository.deleteById(id);
     }
 
-    public void agregarAnotacion(Long id, Anotacion anotacion) {
-        Alumno alumno = obtenerAlumnoPorId(id);
+    public void agregarAnotacion(String id, Anotacion anotacion) {
+        Long alumnoId = Long.parseLong(id);
+        Alumno alumno = obtenerAlumnoPorId(alumnoId.toString());
         if (alumno != null) {
             alumno.getAnotaciones().add(anotacion);
             alumnoRepository.save(alumno);
         }
     }
 
-    public List<? extends Object> obtenerAnotaciones(Long id) {
-        Alumno alumno = obtenerAlumnoPorId(id);
+    public List<Anotacion> obtenerAnotaciones(String id) {
+        Long alumnoId = Long.parseLong(id);
+        Alumno alumno = obtenerAlumnoPorId(alumnoId.toString());
         return alumno != null ? alumno.getAnotaciones() : new ArrayList<>();
     }
 }

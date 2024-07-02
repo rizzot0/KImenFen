@@ -30,7 +30,7 @@ public class ApoderadoController {
     }
 
     @GetMapping("/apoderado/ver-anotaciones/{id}")
-    public String verAnotaciones(@PathVariable("id") Long id, Model model) {
+    public String verAnotaciones(@PathVariable("id") String id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
@@ -40,4 +40,5 @@ public class ApoderadoController {
         }
         return "ver-anotaciones";
     }
+
 }

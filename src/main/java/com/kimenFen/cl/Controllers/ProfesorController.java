@@ -46,7 +46,7 @@ public class ProfesorController {
     }
 
     @GetMapping("/anotacion-alumno/{id}")
-    public String agregarAnotacion(@PathVariable("id") Long id, Model model) {
+    public String agregarAnotacion(@PathVariable("id") String id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
@@ -61,7 +61,7 @@ public class ProfesorController {
     }
 
     @PostMapping("/agregar-anotacion")
-    public String guardarAnotacion(@RequestParam Long id, @RequestParam String texto, @RequestParam String rol) {
+    public String guardarAnotacion(@RequestParam String id, @RequestParam String texto, @RequestParam String rol) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             Anotacion anotacion = new Anotacion();
@@ -75,7 +75,7 @@ public class ProfesorController {
 
 
     @GetMapping("/ver-anotaciones/{id}")
-    public String verAnotaciones(@PathVariable("id") Long id, Model model) {
+    public String verAnotaciones(@PathVariable("id") String id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
             model.addAttribute("alumno", alumno);
@@ -92,7 +92,7 @@ public class ProfesorController {
 
 
     @GetMapping("/editar-anotacion/{id}")
-    public String editarAnotacionProfesor(@PathVariable("id") Long id, Model model, Principal principal) {
+    public String editarAnotacionProfesor(@PathVariable("id") String id, Model model, Principal principal) {
         Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
         if (anotacion != null) {
             model.addAttribute("anotacion", anotacion);
@@ -103,7 +103,7 @@ public class ProfesorController {
     }
 
     @PostMapping("/actualizar-anotacion")
-    public String actualizarAnotacionProfesor(@RequestParam Long id, @RequestParam String texto) {
+    public String actualizarAnotacionProfesor(@RequestParam String id, @RequestParam String texto) {
         Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
         if (anotacion != null) {
             anotacion.setTexto(texto);
@@ -113,7 +113,7 @@ public class ProfesorController {
     }
 
     @GetMapping("/agregar-nota/{id}")
-    public String mostrarFormularioNota(@PathVariable("id") Long id, Model model) {
+    public String mostrarFormularioNota(@PathVariable("id") String id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Id de alumno inválido: " + id));
         Nota nota = new Nota();
         nota.setAlumno(alumno);
