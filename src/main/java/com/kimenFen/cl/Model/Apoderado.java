@@ -1,28 +1,21 @@
 package com.kimenFen.cl.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "apoderado")
+@Document(collection = "apoderados")
 public class Apoderado {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
+	private String id;
 	private String nombre;
 	private String apellido;
 	private String rut;
 	private String telefono;
 
-	public Apoderado() {
-	}
+	public Apoderado() {}
 
-	public Apoderado(Long id, String nombre, String apellido, String rut, String telefono) {
+	public Apoderado(String id, String nombre, String apellido, String rut, String telefono) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -30,12 +23,11 @@ public class Apoderado {
 		this.telefono = telefono;
 	}
 
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

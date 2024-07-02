@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      url: mongodb+srv://bastian:admin@kimenfen.vbfmbih.mongodb.net/?retryWrites=true&w=majority&appName=Kimenfen
+      database: KimenFen

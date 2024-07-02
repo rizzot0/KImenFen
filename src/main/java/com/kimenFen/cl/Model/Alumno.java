@@ -1,58 +1,47 @@
 package com.kimenFen.cl.Model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Document(collection = "alumnos")
 public class Alumno {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private String id;
+	private String nombre;
+	private String apellidoPaterno;
+	private String apellidoMaterno;
+	private String rut;
+	private String telefonoApoderado;
+	private String direccion;
+	private String curso;
 
-    private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private String rut;
-    private String telefonoApoderado;
-    private String direccion;
-    private String curso;
-    
+	@DBRef
+	private Apoderado apoderado;
 
-    @ManyToOne
-    @JoinColumn(name = "apoderado_id")
-    private Apoderado apoderado;
-
-	@OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
+	@DBRef
 	private List<Anotacion> anotaciones = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "alumno")
-    private List<Nota> notas;
+	@DBRef
+	private List<Nota> notas = new ArrayList<>();
 
-    public Alumno() {}
+	public Alumno() {}
 
-    public Alumno(String nombre, String apellidoPaterno, String apellidoMaterno, String rut, String telefonoApoderado,String direccion,String curso) {
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.rut = rut;
-        this.telefonoApoderado = telefonoApoderado;
-        this.direccion = direccion;
-        this.curso = curso;
-    }
+	public Alumno(String nombre, String apellidoPaterno, String apellidoMaterno, String rut, String telefonoApoderado, String direccion, String curso) {
+		this.nombre = nombre;
+		this.apellidoPaterno = apellidoPaterno;
+		this.apellidoMaterno = apellidoMaterno;
+		this.rut = rut;
+		this.telefonoApoderado = telefonoApoderado;
+		this.direccion = direccion;
+		this.curso = curso;
+	}
 
-    
-    
 	public String getDireccion() {
 		return direccion;
 	}
@@ -69,11 +58,11 @@ public class Alumno {
 		this.curso = curso;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -120,6 +109,7 @@ public class Alumno {
 	public List<Anotacion> getAnotaciones() {
 		return anotaciones;
 	}
+
 	public void setAnotaciones(List<Anotacion> anotaciones) {
 		this.anotaciones = anotaciones;
 	}
@@ -139,7 +129,4 @@ public class Alumno {
 	public void setApoderado(Apoderado apoderado) {
 		this.apoderado = apoderado;
 	}
-	
-	
-
 }

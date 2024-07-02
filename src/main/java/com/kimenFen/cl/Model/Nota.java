@@ -1,40 +1,34 @@
 package com.kimenFen.cl.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection = "notas")
 public class Nota {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	private String id;
 
-    private String asignatura;
-    private Double calificacion;
+	private String asignatura;
+	private Double calificacion;
 
-    @ManyToOne
-    @JoinColumn(name = "alumno_id")
-    private Alumno alumno;
+	@DBRef
+	private Alumno alumno;
 
-    public Nota() {}
+	public Nota() {}
 
+	public Nota(String asignatura, Double calificacion, Alumno alumno) {
+		this.asignatura = asignatura;
+		this.calificacion = calificacion;
+		this.alumno = alumno;
+	}
 
-    public Nota(String asignatura, Double calificacion, Alumno alumno) {
-        this.asignatura = asignatura;
-        this.calificacion = calificacion;
-        this.alumno = alumno;
-    }
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
