@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Anotación</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .min-h-50 {
+            min-height: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="w-full bg-yellow-700 p-5 flex flex-col justify-between text-yellow-400 rounded">
+    <h1 class="text-2xl font-bold">Agregar Registro de vida a [[${alumno.nombre}]] [[${alumno.apellidoPaterno}]]</h1>
+    <form th:action="@{${rol == 'ROLE_ADMIN' ? '/administrador/agregar-anotacion' : (rol == 'ROLE_PROFESOR' ? '/profesor/agregar-anotacion' : '')}}" method="post">
+        <input type="hidden" name="id" th:value="${alumno.id}" />
+        <input type="hidden" name="rol" th:value="${rol}" />
+        <h2 for="anotacion" class="text-xl font-bold py-2">Anotación:</h2>
+        <textarea id="anotacion" name="texto" required class="rounded text-black text-xl w-full min-h-50 p-2 focus:outline-none"></textarea><br/>
+        <button type="submit" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-2xl rounded">Agregar</button>
+</form>    
+    </div>
+
+</body>
+</html>

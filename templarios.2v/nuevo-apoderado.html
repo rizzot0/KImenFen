@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuevo Apoderado</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="w-full bg-yellow-700 p-5 flex flex-col justify-between text-yellow-400 rounded">
+        <h1 class="text-2xl font-bold">Agregar Nuevo Apoderado</h1>
+        <form th:action="@{/administrador/apoderados/guardar}" th:object="${apoderado}" method="post">
+            <div>
+                <label class="text-xl" for="nombre">Nombre:</label>
+                <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="nombre" th:field="*{nombre}" />
+            </div>
+            <div>
+                <label class="text-xl" for="apellido">Apellido:</label>
+                <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="apellido" th:field="*{apellido}" />
+            </div>
+            <div>
+                <label class="text-xl" for="rut">RUT:</label>
+                <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="rut" th:field="*{rut}" />
+            </div>
+            <div>
+                <label class="text-xl" for="telefono">Teléfono:</label>
+                <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="telefono" th:field="*{telefono}" />
+            </div>
+            <div>
+                <button class="py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-2xl rounded" type="submit">Guardar</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
