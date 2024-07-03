@@ -72,8 +72,6 @@ public class ProfesorController {
         return "redirect:/profesor/menu";
     }
 
-
-
     @GetMapping("/ver-anotaciones/{id}")
     public String verAnotaciones(@PathVariable("id") String id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
@@ -89,7 +87,6 @@ public class ProfesorController {
         }
         return "ver-anotaciones";
     }
-
 
     @GetMapping("/editar-anotacion/{id}")
     public String editarAnotacionProfesor(@PathVariable("id") String id, Model model, Principal principal) {
@@ -118,11 +115,15 @@ public class ProfesorController {
         Nota nota = new Nota();
         nota.setAlumno(alumno);
         model.addAttribute("nota", nota);
+        model.addAttribute("rol", "ROLE_PROFESOR");
         return "nueva-nota";
     }
 
     @PostMapping("/agregar-nota")
-    public String agregarNota(@ModelAttribute("nota") Nota nota) {
+    public String agregarNota(@ModelAttribute("nota") Nota nota, BindingResult result) {
+        if (result.hasErrors()) {
+            return "nueva-nota";
+        }
         notaRepository.save(nota);
         return "redirect:/profesor/menu";
     }

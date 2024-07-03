@@ -1,56 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:clth="http://www.w3.org/1999/xhtml">
 <head>
     <title>Lista de Alumnos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Lista de Alumnos</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido Paterno</th>
-        <th>Apellido Materno</th>
-        <th>RUT</th>
-        <th>Teléfono Apoderado</th>
-        <th>Dirección</th>
-        <th>Curso</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="alumno : ${alumnos}">
-        <td th:text="${alumno.id}"></td>
-        <td th:text="${alumno.nombre}"></td>
-        <td th:text="${alumno.apellidoPaterno}"></td>
-        <td th:text="${alumno.apellidoMaterno}"></td>
-        <td th:text="${alumno.rut}"></td>
-        <td th:text="${alumno.telefonoApoderado}"></td>
-        <td th:text="${alumno.direccion}"></td>
-        <td th:text="${alumno.curso}"></td>
-        <td>
-            <a th:if="${rol == 'ROLE_ADMIN'}" href="#" class="editar-alumno" th:attr="data-id=${alumno.id}">Editar</a>
-            <a th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
+<div class="w-full bg-yellow-700 p-5 flex flex-col justify-between text-yellow-400 rounded">
+    <h1 class="text-2xl font-bold">Lista de Alumnos</h1>
+    <table>
+        <thead>
+        <tr>
+            <th class="text-xl border border-black">ID</th>
+            <th class="text-xl px-1 border border-black">Nombre</th>
+            <th class="text-xl px-1 border border-black">Apellido Paterno</th>
+            <th class="text-xl px-1 border border-black">Apellido Materno</th>
+            <th class="text-xl px-1 border border-black">RUT</th>
+            <th class="text-xl px-1 border border-black">Teléfono Apoderado</th>
+            <th class="text-xl px-1 border border-black">Dirección</th>
+            <th class="text-xl px-1 border border-black">Curso</th>
+            <th class="text-xl px-1 border border-black">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="bg-white w-full border border-black" th:each="alumno : ${alumnos}">
+            <td class="border border-black" th:text="${alumno.id}"></td>
+            <td class="border border-black" th:text="${alumno.nombre}"></td>
+            <td class="border border-black" th:text="${alumno.apellidoPaterno}"></td>
+            <td class="border border-black" th:text="${alumno.apellidoMaterno}"></td>
+            <td class="border border-black" th:text="${alumno.rut}"></td>
+            <td class="border border-black" th:text="${alumno.telefonoApoderado}"></td>
+            <td class="border border-black" th:text="${alumno.direccion}"></td>
+            <td class="border border-black" th:text="${alumno.curso}"></td>
+            <td class="bg-yellow-800 w-full">
+                <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1" th:if="${rol == 'ROLE_ADMIN'}" href="#" th:attr="data-id=${alumno.id}">Editar</a>
+                <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1" th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
 
-            <th:block th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}">
-                <a th:switch="${rol}">
-                    <a th:case="'ROLE_ADMIN'" href="#" class="agregar-registro" th:attr="data-id=${alumno.id}" data-rol="ROLE_ADMIN">Agregar Registro de vida</a>
-                    <a th:case="'ROLE_PROFESOR'" href="#" class="agregar-registro" th:attr="data-id=${alumno.id}" data-rol="ROLE_PROFESOR">Agregar Registro de vida</a>
-                </a>
-            </th:block>
+                <div th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}">
+                    <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1" href="#" th:attr="data-id=${alumno.id},data-rol=${rol}">Agregar Registro de vida</a>
+                </div>
 
-            <a th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}" href="#" class="ver-registro" th:attr="data-id=${alumno.id}">Ver Registro de vida</a>
+                <a class="py-2 px-4 my-2 text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}" href="#" th:attr="data-id=${alumno.id}">Ver Registro de vida</a>
 
-            <th:block th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}">
-                <a th:switch="${rol}">
-                    <a th:case="'ROLE_ADMIN'" href="#" class="agregar-nota" th:attr="data-id=${alumno.id}" data-rol="ROLE_ADMIN">Agregar Nota</a>
-                    <a th:case="'ROLE_PROFESOR'" href="#" class="agregar-nota" th:attr="data-id=${alumno.id}" data-rol="ROLE_PROFESOR">Agregar Nota</a>
-                </a>
-            </th:block>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                <div th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}">
+                    <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1" href="#" th:attr="data-id=${alumno.id},data-rol=${rol}">Agregar Nota</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

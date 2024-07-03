@@ -30,8 +30,7 @@ public class AlumnoService {
     }
 
     public void agregarAnotacion(String id, Anotacion anotacion) {
-        Long alumnoId = Long.parseLong(id);
-        Alumno alumno = obtenerAlumnoPorId(alumnoId.toString());
+        Alumno alumno = obtenerAlumnoPorId(id);
         if (alumno != null) {
             alumno.getAnotaciones().add(anotacion);
             alumnoRepository.save(alumno);
@@ -39,8 +38,7 @@ public class AlumnoService {
     }
 
     public List<Anotacion> obtenerAnotaciones(String id) {
-        Long alumnoId = Long.parseLong(id);
-        Alumno alumno = obtenerAlumnoPorId(alumnoId.toString());
+        Alumno alumno = obtenerAlumnoPorId(id);
         return alumno != null ? alumno.getAnotaciones() : new ArrayList<>();
     }
 }

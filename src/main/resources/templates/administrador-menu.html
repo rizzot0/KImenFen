@@ -4,49 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú del Administrador</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        .palatal {
-            display: flex;
-        }
-        .menu {
-            width: 20%;
-            background-color: #008CBA;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .content {
-            width: 80%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .form-container {
-            display: none;
-        }
-        .form-container.active {
-            display: block;
+        /* Añadir sombras personalizadas a los textos */
+        .text-shadow {
+            text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
-<body>
-<div class="palatal">
-    <div class="menu">
-        <div class="menu-buttons">
-            <h2>Comunidad Educativa</h2>
-            <h2>KimenFen</h2>
-            <h3>Menú Administrador</h3>
-            <button onclick="listarAlumno()">Listar Alumnos</button>
-            <button onclick="nuevoAlumno()">Matricular Alumno</button>
-            <button onclick="nuevoApoderado()">Matricular Apoderado</button>
-            <button onclick="listarApoderado()">Listar Apoderados</button>
-            <button onclick="nuevoProfesor()">Contratar Profesores</button>
-            <button onclick="listarProfesor()">Listar Profesores</button>
-            <button onclick="asociarAlumnoApoderado()">Asociar Alumno a Apoderado</button>
+<body class="font-sans m-0 p-0">
+<div class="flex h-screen">
+    <!-- Menu izquierda -->
+    <div class="w-64 bg-green-500 p-5 shadow-lg flex flex-col justify-between text-white">
+        <div class="menu-buttons flex-grow">
+            <h2 class="text-2xl font-bold text-shadow">Comunidad Educativa</h2>
+            <h2 class="text-xl font-semibold mt-2 text-shadow">KimenFen</h2>
+            <h3 class="text-lg font-medium mt-4 text-shadow">Menu Administrador</h3>
+            <button onclick="listarAlumno()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Listar Alumnos</button>
+            <button onclick="nuevoAlumno()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow">Matricular Alumno</button>
+            <button onclick="nuevoApoderado()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Matricular Apoderado</button>
+            <button onclick="listarApoderado()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Listar Apoderados</button>
+            <button onclick="nuevoProfesor()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Contratar Profesores</button>
+            <button onclick="listarProfesor()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Listar Profesores</button>
+            <button onclick="asociarAlumnoApoderado()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Asociar Alumno a Apoderado</button>
         </div>
-        <button class="logout" onclick="logout()">Cerrar sesión</button>
+        <button class="w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white text-lg mt-4 text-shadow rounded"  onclick="logout()">Cerrar sesión</button>
     </div>
-
-    <div class="content" id="content">
+    <!-- Parte derecha -->
+    <div class="flex-grow p-5" id="content">
+        <div id="defecto" class="info">
+            <h2 class="text-2xl font-bold text-gray-300"> Sistema KimenFen</h2>
+            <h1 class="w-full  mb-4 text-gray-300">UCN todos los derechos reservados 2024@</h1>
+        </div>
     </div>
 </div>
 
@@ -144,6 +133,28 @@
         });
     }
 
+    function eventoEditarProfesor() {
+        document.querySelectorAll('.editar-profesor').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                editarProfesor(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+
+    function editarProfesor(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/editar-profesor/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+
     function editarAlumno(id) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/administrador/editar-alumno/' + id, true);
@@ -178,7 +189,27 @@
 
     function verRegistroDeVida(id) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/listar-anotaciones-alumno/' + id, true);
+        xhr.open('GET', '/administrador/ver-anotaciones/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoEditarApoderado() {
+        document.querySelectorAll('.editar-apoderado').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                editarApoderado(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function editarApoderado(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/editar-apoderado/' + id, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('content').innerHTML = xhr.responseText;
@@ -238,6 +269,14 @@
                 nuevaNota(event.target.getAttribute('data-id'));
             });
         });
+    }
+
+
+    function hiddenDefault() {
+        var defaultInfo = document.getElementById('defecto');
+        if (defaultInfo) {
+            defaultInfo.classList.add('hidden');
+        }
     }
 
     function logout() {

@@ -2,15 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Editar Anotación</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .min-h-50 {
+            min-height: 250px;
+        }
+    </style>
 </head>
 <body>
-<div th:fragment="editarAnotacion">
-    <h1>Editar Anotación</h1>
+<div class="w-full bg-yellow-700 p-5 flex flex-col justify-between text-yellow-400 rounded" th:fragment="editarAnotacion">
+    <h1 class="text-2xl font-bold">Editar Anotación</h1>
     <form th:action="@{${rol == 'ROLE_ADMIN' ? '/administrador/actualizar-anotacion' : (rol == 'ROLE_PROFESOR' ? '/profesor/actualizar-anotacion' : '')}}" method="post">
         <input type="hidden" name="id" th:value="${anotacion.id}" />
-        <label for="texto">Anotación:</label>
-        <input type="text" id="texto" name="texto" th:value="${anotacion.texto}" required/><br/>
-        <button type="submit">Actualizar</button>
+        <h2 for="texto" class="text-xl font-bold py-2">Anotación:</h2>
+        <textarea type="text" id="texto" name="texto" th:value="${anotacion.texto}" required class="rounded text-black text-xl w-full min-h-50 p-2 focus:outline-none"></textarea><br/>
+        <button class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-2xl rounded" type="submit">Actualizar</button>
     </form>
 </div>
 </body>
