@@ -13,15 +13,26 @@ public class Nota {
 	private String asignatura;
 	private Double calificacion;
 
+	private String descripcion;
+
 	@DBRef
 	private Alumno alumno;
 
 	public Nota() {}
 
-	public Nota(String asignatura, Double calificacion, Alumno alumno) {
+	public Nota(String asignatura, Double calificacion, Alumno alumno,String descripcion) {
 		this.asignatura = asignatura;
 		this.calificacion = calificacion;
 		this.alumno = alumno;
+		this.descripcion = descripcion;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public String getId() {
@@ -54,5 +65,16 @@ public class Nota {
 
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
+	}
+
+	@Override
+	public String toString() {
+		return "Nota{" +
+				"id='" + id + '\'' +
+				", asignatura='" + asignatura + '\'' +
+				", calificacion=" + calificacion +
+				", descripcion='" + descripcion + '\'' +
+				", alumno=" + alumno +
+				'}';
 	}
 }

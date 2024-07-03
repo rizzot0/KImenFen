@@ -21,7 +21,7 @@ public class ProfesorService {
         return profesorRepository.save(profesor);
     }
 
-    public Profesor getProfesorById(Long id) {
+    public Profesor getProfesorById(String id) {
         return profesorRepository.findById(id).orElse(null);
     }
 }
