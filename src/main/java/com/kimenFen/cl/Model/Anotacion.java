@@ -1,22 +1,20 @@
 package com.kimenFen.cl.Model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.*;
-
-
-@Entity
+@Document(collection = "anotaciones")
 public class Anotacion {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String texto;
 
-    @ManyToOne
-    @JoinColumn(name = "alumno_id")
+    @DBRef
     private Alumno alumno;
 
-    public Anotacion(Long id, String texto, Alumno alumno) {
+    public Anotacion(String id, String texto, Alumno alumno) {
         this.id = id;
         this.texto = texto;
         this.alumno = alumno;
@@ -26,11 +24,11 @@ public class Anotacion {
 
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

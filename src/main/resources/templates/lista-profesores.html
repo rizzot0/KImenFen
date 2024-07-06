@@ -2,28 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lista de Profesores</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Lista de Profesores</h1>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>RUT</th>
-        <th>Teléfono</th>
-    </tr>
-    <tr th:each="profesor : ${profesores}">
-        <td th:text="${profesor.id}"></td>
-        <td th:text="${profesor.nombre}"></td>
-        <td th:text="${profesor.apellido}"></td>
-        <td th:text="${profesor.rut}"></td>
-        <td th:text="${profesor.telefono}"></td>
-        <td>
-            <a href="#" class="editar-profesor" th:data-id="${profesor.id}">Editar</a>
-            <a th:href="@{/administrador/eliminar-profesor/{id}(id=${profesor.id})}">Eliminar</a>
-        </td>
-    </tr>
-</table>
+<div class="w-full bg-yellow-700 p-5 flex flex-col justify-between text-yellow-400 rounded">
+    <h1 class="text-2xl font-bold">Lista de Profesores</h1>
+    <table>
+        <tr>
+            <th class="text-xl px-1 border border-black">ID</th>
+            <th class="text-xl px-1 border border-black">Nombre</th>
+            <th class="text-xl px-1 border border-black">Apellido</th>
+            <th class="text-xl px-1 border border-black">RUT</th>
+            <th class="text-xl px-1 border border-black">Teléfono</th>
+            <th class="text-xl px-1 border border-black">Acciones</th>
+        </tr>
+        <tr class="bg-white w-full border border-black" th:each="profesor : ${profesores}">
+            <td class="border border-black" th:text="${profesor.id}"></td>
+            <td class="border border-black" th:text="${profesor.nombre}"></td>
+            <td class="border border-black" th:text="${profesor.apellido}"></td>
+            <td class="border border-black" th:text="${profesor.rut}"></td>
+            <td class="border border-black" th:text="${profesor.telefono}"></td>
+            <td class="bg-yellow-800 w-full">
+                <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 editar-profesor" th:data-id="${profesor.id}">Editar</a>
+                <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1" th:href="@{/administrador/eliminar-profesor/{id}(id=${profesor.id})}">Eliminar</a>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

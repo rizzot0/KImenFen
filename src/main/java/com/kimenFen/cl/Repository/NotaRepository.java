@@ -1,8 +1,12 @@
 package com.kimenFen.cl.Repository;
 
 import com.kimenFen.cl.Model.Nota;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface NotaRepository extends JpaRepository<Nota, Long> {
+import java.util.List;
+
+@Repository
+public interface NotaRepository extends MongoRepository<Nota, String> {
+    List<Nota> findByAlumnoId(String alumnoId);
 }
-
