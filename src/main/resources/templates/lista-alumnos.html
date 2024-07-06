@@ -40,8 +40,8 @@
                 </div>
 
                 <a class="py-2 px-4 my-2 text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 ver-registro" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}"  th:attr="data-id=${alumno.id}">Ver Registro de vida</a>
-                <a class="py-2 px-4 my-2 text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 ver-nota" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}"  th:attr="data-id=${alumno.id}">Ver Notas
-                    <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 agregar-nota" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}" th:attr="data-id=${alumno.id},data-rol=${rol}">Agregar Nota</a>
+                <a class="py-2 px-4 my-2 text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 ver-notas" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}"  th:attr="data-id=${alumno.id}">Ver Notas</a>
+                <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 agregar-nota" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}" th:attr="data-id=${alumno.id}">Agregar Nota</a>
         </tr>
         </tbody>
     </table>

@@ -2,9 +2,9 @@ package com.kimenFen.cl.Controllers;
 
 import com.kimenFen.cl.Model.*;
 import com.kimenFen.cl.Repository.*;
-import com.kimenFen.cl.Service.AlumnoService;
 import com.kimenFen.cl.Service.NotaService;
-import org.bson.types.ObjectId;
+import com.kimenFen.cl.Security.SecurityConfig;
+import com.kimenFen.cl.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +32,8 @@ public class AdministradorController {
     private AnotacionRepository anotacionRepository;
     @Autowired
     private NotaRepository notaRepository;
-
+    @Autowired
+    private SecurityConfig securityConfig;
     @Autowired
     private NotaService notaService;
 
@@ -113,20 +114,36 @@ public class AdministradorController {
 
 
     @PostMapping("/profesores/guardar")
-    public String guardarProfesor(@ModelAttribute Profesor profesor, BindingResult result) {
+    public String guardarProfesor(@ModelAttribute Profesor profesor, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "nuevo-profesor";
         }
+
+        String rut = profesor.getRut().replace(".", "").replace("-", "");
+        if (!Modulo11.verificar(rut)) {
+            model.addAttribute("error", "RUT inválido");
+            return "nuevo-profesor";
+        }
+
         profesorRepository.save(profesor);
+        //securityConfig.createUser(profesor.getRut(), "PROFESOR");
         return "redirect:/administrador/menu";
     }
 
     @PostMapping("/apoderados/guardar")
-    public String guardarApoderado(@ModelAttribute Apoderado apoderado, BindingResult result) {
+    public String guardarApoderado(@ModelAttribute Apoderado apoderado, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "administrador/menu";
+            return "nuevo-apoderado";
         }
+
+        String rut = apoderado.getRut().replace(".", "").replace("-", "");
+        if (!Modulo11.verificar(rut)) {
+            model.addAttribute("error", "RUT inválido");
+            return "nuevo-apoderado";
+        }
+
         apoderadoRepository.save(apoderado);
+        //securityConfig.createUser(apoderado.getRut(), "APODERADO");
         return "redirect:/administrador/menu";
     }
 
@@ -331,6 +348,13 @@ public class AdministradorController {
             return "ver-notas";
         }
         return "redirect:/administrador/alumnos";
+    }
+
+    @GetMapping("/ver-asociaciones")
+    public String verAsociaciones(Model model) {
+        List<Alumno> alumnosConApoderados = alumnoRepository.findAll();
+        model.addAttribute("alumnosConApoderados", alumnosConApoderados);
+        return "ver-asociaciones";
     }
 
 

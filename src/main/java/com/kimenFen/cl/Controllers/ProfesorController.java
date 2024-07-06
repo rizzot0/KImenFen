@@ -76,16 +76,18 @@ public class ProfesorController {
     public String verAnotaciones(@PathVariable("id") String id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
+            List<Anotacion> anotaciones = anotacionRepository.findByAlumno_Id(id);
             model.addAttribute("alumno", alumno);
-            model.addAttribute("anotaciones", alumno.getAnotaciones());
+            model.addAttribute("anotaciones", anotaciones);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                 String rol = userDetails.getAuthorities().iterator().next().getAuthority();
                 model.addAttribute("rol", rol);
             }
+            return "ver-anotaciones";
         }
-        return "ver-anotaciones";
+        return "redirect:/profesor/menu";
     }
 
     @GetMapping("/editar-anotacion/{id}")
@@ -125,6 +127,24 @@ public class ProfesorController {
             return "nueva-nota";
         }
         notaRepository.save(nota);
+        return "redirect:/profesor/menu";
+    }
+
+    @GetMapping("/ver-notas/{id}")
+    public String verNotas(@PathVariable("id") String id, Model model) {
+        Alumno alumno = alumnoRepository.findById(id).orElse(null);
+        if (alumno != null) {
+            List<Nota> notas = notaRepository.findByAlumnoId(id);
+            model.addAttribute("alumno", alumno);
+            model.addAttribute("notas", notas);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                String rol = userDetails.getAuthorities().iterator().next().getAuthority();
+                model.addAttribute("rol", rol);
+            }
+            return "ver-notas";
+        }
         return "redirect:/profesor/menu";
     }
 }

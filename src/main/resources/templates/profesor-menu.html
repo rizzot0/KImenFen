@@ -41,6 +41,7 @@
                 eventoAgregarRegistroVida();
                 eventoEditarAnotacion();
                 eventoAgregarNota();
+                eventoVerNotas();
             }
         };
         xhr.send();
@@ -127,6 +128,27 @@
                 nuevaNota(event.target.getAttribute('data-id'));
             });
         });
+    }
+
+    function eventoVerNotas() {
+        document.querySelectorAll('.ver-notas').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                verNotas(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+
+    function verNotas(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/ver-notas/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
     }
 
     function hiddenDefault() {

@@ -1,5 +1,6 @@
 package com.kimenFen.cl.Security;
 
+import com.kimenFen.cl.Model.Modulo11;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -71,6 +72,20 @@ public class SecurityConfig {
             response.sendRedirect(redirectUrl);
         };
     }
+
+//    public void createUser(String rut, String role) {
+//        String cleanRut = rut.replace(".", "").replace("-", "");
+//        String rutSinDv = Modulo11.rutDV(cleanRut);
+//
+//        // Crea el usuario y la contraseña
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username(cleanRut)
+//                .password(rutSinDv)
+//                .roles(role)
+//                .build();
+//        inMemoryUserDetailsManager().createUser(user);
+//    }
+
 }
 
 

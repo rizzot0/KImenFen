@@ -12,6 +12,7 @@
         <input type="hidden" th:field="*{alumno.id}" th:value="${nota.alumno.id}" />
         <label class="text-xl">Asignatura: <input class="text-black rounded px-1 focus:outline-none my-2" type="text" th:field="*{asignatura}" /></label><br/>
         <label class="text-xl">Calificación: <input class="text-black rounded px-1 focus:outline-none" type="number" step="0.1" th:field="*{calificacion}" /></label><br/>
+        <label class="text-xl">Descripción: <textarea class="text-black rounded px-1 focus:outline-none my-2" rows="4" th:field="*{descripcion}"></textarea></label><br/>
         <input class="py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-2xl rounded" type="submit" value="Guardar" />
     </form>
 </div>

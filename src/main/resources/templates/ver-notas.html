@@ -20,8 +20,8 @@
         <tr th:each="nota : ${notas}">
             <td class="border border-gray-300 px-4 py-2" th:text="${nota.id}"></td>
             <td class="border border-gray-300 px-4 py-2" th:text="${nota.asignatura}"></td>
-            <td class="border border-gray-300 px-4 py-2" th:text="${nota.valor}"></td>
-            <td class="border border-gray-300 px-4 py-2" th:text="${nota.fecha}"></td>
+            <td class="border border-gray-300 px-4 py-2" th:text="${nota.calificacion}"></td>
+            <td class="border border-gray-300 px-4 py-2" th:text="${nota.descripcion}"></td>
         </tr>
         </tbody>
     </table>

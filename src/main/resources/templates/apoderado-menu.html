@@ -35,36 +35,61 @@
 </div>
 
 <script>
-    function cargarContenido(url) {
+    function listarAlumno() {
+        hiddenDefault();
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
+        xhr.open('GET', '/apoderado/alumnos', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('content').innerHTML = xhr.responseText;
-                agregarEventos();
+                eventoVerRegistroVida();
+                eventoVerNotas();
             }
         };
         xhr.send();
     }
 
-    function listarAlumno() {
-        hiddenDefault();
-        cargarContenido('/apoderado/alumnos');
-    }
-
-    function verAnotaciones(id) {
-        cargarContenido('/apoderado/ver-anotaciones/' + id);
-    }
-
-    function agregarEventos() {
-        document.querySelectorAll('.ver-registro').forEach(function(button) {
+    function eventoVerNotas() {
+        document.querySelectorAll('.ver-notas').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
-                verAnotaciones(event.target.getAttribute('data-id'));
+                verNotas(event.target.getAttribute('data-id'));
             });
         });
     }
 
+
+    function verNotas(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/apoderado/ver-notas/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+
+    function eventoVerRegistroVida() {
+        document.querySelectorAll('.ver-registro').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                verRegistroVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function verRegistroVida(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/apoderado/ver-anotaciones/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
 
     function hiddenDefault() {
         var defaultInfo = document.getElementById('defecto');
