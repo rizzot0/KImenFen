@@ -2,26 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Notas del Alumno</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Notas de [[${alumno.nombre}]]</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Asignatura</th>
-        <th>Nota</th>
-        <th>Fecha</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="nota : ${notas}">
-        <td th:text="${nota.id}"></td>
-        <td th:text="${nota.asignatura}"></td>
-        <td th:text="${nota.valor}"></td>
-        <td th:text="${nota.fecha}"></td>
-    </tr>
-    </tbody>
-</table>
+<div class="container mx-auto p-5">
+    <h1 class="text-2xl font-bold mb-5">Notas de <span th:text="${alumno.nombre}"></span></h1>
+    <table class="table-auto w-full border-collapse border border-gray-400">
+        <thead>
+        <tr class="bg-gray-200">
+            <th class="border border-gray-300 px-4 py-2">ID</th>
+            <th class="border border-gray-300 px-4 py-2">Asignatura</th>
+            <th class="border border-gray-300 px-4 py-2">Nota</th>
+            <th class="border border-gray-300 px-4 py-2">Fecha</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="nota : ${notas}">
+            <td class="border border-gray-300 px-4 py-2" th:text="${nota.id}"></td>
+            <td class="border border-gray-300 px-4 py-2" th:text="${nota.asignatura}"></td>
+            <td class="border border-gray-300 px-4 py-2" th:text="${nota.valor}"></td>
+            <td class="border border-gray-300 px-4 py-2" th:text="${nota.fecha}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/administrador/alumnos" class="mt-5 inline-block bg-yellow-500 text-white px-4 py-2 rounded">Volver a la lista de alumnos</a>
+</div>
 </body>
 </html>

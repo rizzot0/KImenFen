@@ -32,11 +32,11 @@ public class AdministradorController {
     private AnotacionRepository anotacionRepository;
     @Autowired
     private NotaRepository notaRepository;
-    @Autowired
-    private AlumnoService alumnoService;
 
     @Autowired
     private NotaService notaService;
+
+
 
     @GetMapping("/alumnos")
     public String listarAlumnos(Model model) {
@@ -73,13 +73,11 @@ public class AdministradorController {
         model.addAttribute("profesores", profesorRepository.findAll());
         return "lista-profesores";
     }
-
     @GetMapping("/ver-anotaciones/{id}")
     public String verAnotaciones(@PathVariable("id") String id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
-            List<Anotacion> anotaciones = alumno.getAnotaciones();
-            System.out.println("Anotaciones: " + anotaciones);
+            List<Anotacion> anotaciones = anotacionRepository.findByAlumno_Id(id);
             model.addAttribute("alumno", alumno);
             model.addAttribute("anotaciones", anotaciones);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -92,6 +90,8 @@ public class AdministradorController {
         }
         return "redirect:/administrador/menu";
     }
+
+
 
     @GetMapping("/profesores/nuevo")
     public String nuevoProfesor(Model model) {
@@ -319,7 +319,7 @@ public class AdministradorController {
     public String verNotas(@PathVariable("id") String id, Model model) {
         Alumno alumno = alumnoRepository.findById(id).orElse(null);
         if (alumno != null) {
-            List<Nota> notas = alumno.getNotas();
+            List<Nota> notas = notaRepository.findByAlumnoId(id);
             model.addAttribute("alumno", alumno);
             model.addAttribute("notas", notas);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -329,10 +329,8 @@ public class AdministradorController {
                 model.addAttribute("rol", rol);
             }
             return "ver-notas";
-        } else {
-            System.out.println("Alumno not found with ID: " + id);
         }
-        return "redirect:/administrador/menu";
+        return "redirect:/administrador/alumnos";
     }
 
 
