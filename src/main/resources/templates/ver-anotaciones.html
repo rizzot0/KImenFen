@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Ver Anotaciones</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
 </head>
-<body>
-<div class="w-full bg-yellow-700 p-5 flex flex-col justify-between text-yellow-400 rounded">
-    <h1 class="text-2xl font-bold">Anotaciones de <span th:text="${alumno.nombre}"></span> <span th:text="${alumno.apellidoPaterno}"></span></h1>
-    <ul>
-        <li th:each="anotacion : ${anotaciones}">
-            <span class="bg-white w-full border border-black" th:text="${anotacion.texto}"></span>
-            <a class="text-blue-400 hover:text-blue-600 underline rounded cursor-pointer px-1" th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/editar-anotacion/{id}(id=${anotacion.id})}">Editar</a>
-            <a class="text-blue-400 hover:text-blue-600 underline rounded cursor-pointer px-1" th:if="${rol == 'ROLE_PROFESOR'}" th:href="@{/profesor/editar-anotacion/{id}(id=${anotacion.id})}">Editar</a>
-            <a class="text-blue-400 hover:text-blue-600 underline rounded cursor-pointer px-1" th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/eliminar-anotacion/{id}(id=${anotacion.id})}">Eliminar</a>
+<body class="bg-gray-100 p-6">
+<div class="w-full bg-white p-6 rounded shadow-md">
+    <h1 class="text-3xl font-bold mb-4">Anotaciones de <span th:text="${alumno.nombre}"></span> <span th:text="${alumno.apellidoPaterno}"></span></h1>
+    <ul class="space-y-4">
+        <li th:each="anotacion : ${anotaciones}" class="flex justify-between items-center bg-gray-200 p-4 rounded">
+            <span th:text="${anotacion.texto}" class="text-xl"></span>
+            <div class="flex space-x-4">
+                <a th:href="@{/administrador/editar-anotacion/{id}(id=${anotacion.id})}" class="text-blue-600 hover:text-blue-800">Editar</a>
+                <a th:href="@{/administrador/eliminar-anotacion/{id}(id=${anotacion.id})}" class="text-red-600 hover:text-red-800">Eliminar</a>
+            </div>
         </li>
     </ul>
 </div>
-
 </body>
 </html>

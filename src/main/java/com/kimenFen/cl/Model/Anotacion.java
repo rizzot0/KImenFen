@@ -6,20 +6,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "anotaciones")
 public class Anotacion {
-
     @Id
     private String id;
+
     private String texto;
 
     @DBRef
     private Alumno alumno;
 
-    public Anotacion() {}
-
     public Anotacion(String id, String texto, Alumno alumno) {
         this.id = id;
         this.texto = texto;
         this.alumno = alumno;
+    }
+
+    public Anotacion() {
+
     }
 
     public String getId() {

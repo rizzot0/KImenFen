@@ -6,15 +6,11 @@
     <title>Menú del Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Añadir sombras personalizadas a los textos */
-        .text-shadow {
-            text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.5);
-        }
+        .text-shadow { text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.5); }
     </style>
 </head>
 <body class="font-sans m-0 p-0">
 <div class="flex h-screen">
-    <!-- Menu izquierda -->
     <div class="w-64 bg-green-500 p-5 shadow-lg flex flex-col justify-between text-white">
         <div class="menu-buttons flex-grow">
             <h2 class="text-2xl font-bold text-shadow">Comunidad Educativa</h2>
@@ -30,11 +26,10 @@
         </div>
         <button class="w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white text-lg mt-4 text-shadow rounded"  onclick="logout()">Cerrar sesión</button>
     </div>
-    <!-- Parte derecha -->
     <div class="flex-grow p-5" id="content">
         <div id="defecto" class="info">
             <h2 class="text-2xl font-bold text-gray-300"> Sistema KimenFen</h2>
-            <h1 class="w-full  mb-4 text-gray-300">UCN todos los derechos reservados 2024@</h1>
+            <h1 class="w-full  mb-4 text-gray-300">© 2024 KimenFen. Todos los derechos reservados.</h1>
         </div>
     </div>
 </div>
@@ -51,13 +46,14 @@
                 eventoVerRegistroVida();
                 eventoEditarAnotacion();
                 eventoAgregarNota();
+                eventoVerNotas();
             }
         };
         xhr.send();
     }
 
     function listarApoderado() {
-        var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest(); 
         xhr.open('GET', '/administrador/apoderados', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -154,42 +150,9 @@
         xhr.send();
     }
 
-
-    function editarAlumno(id) {
+    function editarAnotacion(id) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/editar-alumno/' + id, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('content').innerHTML = xhr.responseText;
-            }
-        };
-        xhr.send();
-    }
-
-    function agregarRegistroDeVida(id, rol) {
-        var url = rol === 'ROLE_ADMIN' ? '/administrador/anotacion-alumno/' + id : '/profesor/anotacion-alumno/' + id;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('content').innerHTML = '<div class="form-container active">' + xhr.responseText + '</div>';
-            }
-        };
-        xhr.send();
-    }
-
-    function eventoAgregarRegistroVida() {
-        document.querySelectorAll('.agregar-registro').forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                agregarRegistroDeVida(event.target.getAttribute('data-id'), event.target.getAttribute('data-rol'));
-            });
-        });
-    }
-
-    function verRegistroDeVida(id) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/ver-anotaciones/' + id, true);
+        xhr.open('GET', '/administrador/editar-anotacion/' + id, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('content').innerHTML = xhr.responseText;
@@ -207,6 +170,7 @@
         });
     }
 
+
     function editarApoderado(id) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/administrador/editar-apoderado/' + id, true);
@@ -218,24 +182,38 @@
         xhr.send();
     }
 
-    function eventoVerRegistroVida() {
-        document.querySelectorAll('.ver-registro').forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                verRegistroDeVida(event.target.getAttribute('data-id'));
-            });
-        });
-    }
-
-    function editarAnotacion(id) {
+    function editarAlumno(id) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/editar-anotacion/' + id, true);
+        xhr.open('GET', '/administrador/editar-alumno/' + id, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById('content').innerHTML = '<div class="form-container active">' + xhr.responseText + '</div>';
+                document.getElementById('content').innerHTML = xhr.responseText;
             }
         };
         xhr.send();
+    }
+
+    function agregarRegistroDeVida(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/anotacion-alumno/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+
+
+
+    function eventoAgregarRegistroVida() {
+        document.querySelectorAll('.agregar-registro').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                agregarRegistroDeVida(event.target.getAttribute('data-id'));
+            });
+        });
     }
 
     function eventoEditarAnotacion() {
@@ -247,13 +225,21 @@
         });
     }
 
-    window.onload = function() {
-        listarAlumno();
-    };
+    function eventoVerRegistroVida() {
+        document.querySelectorAll('.ver-registro').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                verRegistroVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
 
-    function nuevaNota(id) {
+
+
+
+    function verRegistroVida(id) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/administrador/agregar-nota/' + id, true);
+        xhr.open('GET', '/administrador/ver-anotaciones/' + id, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('content').innerHTML = xhr.responseText;
@@ -262,25 +248,50 @@
         xhr.send();
     }
 
+
     function eventoAgregarNota() {
         document.querySelectorAll('.agregar-nota').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
-                nuevaNota(event.target.getAttribute('data-id'));
+                agregarNota(event.target.getAttribute('data-id'), 'ROLE_ADMIN');
+            });
+        });
+    }
+
+    function agregarNota(id, rol) {
+        var url = rol === 'ROLE_ADMIN' ? '/administrador/agregar-nota/' + id : '/profesor/agregar-nota/' + id;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = '<div class="form-container active">' + xhr.responseText + '</div>';
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoVerNotas() {
+        document.querySelectorAll('.ver-notas').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                verNotas(event.target.getAttribute('data-id'));
             });
         });
     }
 
 
-    function hiddenDefault() {
-        var defaultInfo = document.getElementById('defecto');
-        if (defaultInfo) {
-            defaultInfo.classList.add('hidden');
-        }
+    function verNotas(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/administrador/ver-notas/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
     }
 
     function logout() {
-        alert("Sesión cerrada");
         window.location.href = '/logout';
     }
 </script>
