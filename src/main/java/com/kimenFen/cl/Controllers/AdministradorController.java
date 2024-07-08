@@ -33,9 +33,8 @@ public class AdministradorController {
     @Autowired
     private NotaRepository notaRepository;
     @Autowired
-    private SecurityConfig securityConfig;
-    @Autowired
-    private NotaService notaService;
+    private UsuarioService usuarioService;
+
 
 
 
@@ -111,8 +110,6 @@ public class AdministradorController {
         model.addAttribute("apoderado", new Apoderado());
         return "nuevo-apoderado";
     }
-
-
     @PostMapping("/profesores/guardar")
     public String guardarProfesor(@ModelAttribute Profesor profesor, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -126,7 +123,11 @@ public class AdministradorController {
         }
 
         profesorRepository.save(profesor);
-        //securityConfig.createUser(profesor.getRut(), "PROFESOR");
+
+        usuarioService.createUser(rut, "PROFESOR");
+
+        System.out.println("Profesor creado con RUT: " + rut);
+
         return "redirect:/administrador/menu";
     }
 
@@ -143,7 +144,11 @@ public class AdministradorController {
         }
 
         apoderadoRepository.save(apoderado);
-        //securityConfig.createUser(apoderado.getRut(), "APODERADO");
+
+        usuarioService.createUser(rut, "APODERADO");
+
+        System.out.println("Apoderado creado con RUT: " + rut);
+
         return "redirect:/administrador/menu";
     }
 

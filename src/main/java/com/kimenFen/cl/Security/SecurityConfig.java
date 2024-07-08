@@ -1,13 +1,11 @@
 package com.kimenFen.cl.Security;
 
-import com.kimenFen.cl.Model.Modulo11;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -17,26 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/administrador/**").hasRole("ADMIN")
-                        .requestMatchers("/profesor/**").hasRole("PROFESOR")
-                        .anyRequest().permitAll()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .successHandler(customAuthenticationSuccessHandler())
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .permitAll()
-                );
-        return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         UserDetails apoderado = User.withDefaultPasswordEncoder()
                 .username("apoderado")
                 .password("password")
@@ -59,6 +38,25 @@ public class SecurityConfig {
     }
 
     @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests(authorize -> authorize
+                        .requestMatchers("/administrador/**").hasRole("ADMIN")
+                        .requestMatchers("/profesor/**").hasRole("PROFESOR")
+                        .anyRequest().permitAll()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .successHandler(customAuthenticationSuccessHandler())
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .permitAll()
+                );
+        return http.build();
+    }
+
+    @Bean
     public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         return (request, response, authentication) -> {
             String redirectUrl = request.getContextPath();
@@ -72,20 +70,4 @@ public class SecurityConfig {
             response.sendRedirect(redirectUrl);
         };
     }
-
-//    public void createUser(String rut, String role) {
-//        String cleanRut = rut.replace(".", "").replace("-", "");
-//        String rutSinDv = Modulo11.rutDV(cleanRut);
-//
-//        // Crea el usuario y la contraseña
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                .username(cleanRut)
-//                .password(rutSinDv)
-//                .roles(role)
-//                .build();
-//        inMemoryUserDetailsManager().createUser(user);
-//    }
-
 }
-
-

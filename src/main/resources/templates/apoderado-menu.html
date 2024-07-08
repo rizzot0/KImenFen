@@ -20,7 +20,7 @@
             <h2 class="text-2xl font-bold text-shadow">Comunidad Educativa</h2>
             <h2 class="text-xl font-semibold mt-2 text-shadow">KimenFen</h2>
             <h3 class="text-lg font-medium mt-4 text-shadow">Menu Apoderado</h3>
-            <button onclick="listarAlumno()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Listar Alumnos</button>
+            <button onclick="listarAlumno()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Ver alumnos</button>
         </div>
         <button class="w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white text-lg mt-4 text-shadow rounded" onclick="logout()">Cerrar sesión</button>
     </div>
@@ -38,7 +38,7 @@
     function listarAlumno() {
         hiddenDefault();
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/apoderado/alumnos', true);
+        xhr.open('GET', '/apoderado/alumnos-apoderado', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById('content').innerHTML = xhr.responseText;
