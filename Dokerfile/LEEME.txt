@@ -1,0 +1,8 @@
+Ta weno del dar soul
+
+mvn clean package //paso 1
+
+docker build -t kimenfen . //paso 2
+
+(el nombre debería ser otro pero funka todo caso es KimenFen-1-0.0.1-SNAPSHOT)
+(por si no funka)
