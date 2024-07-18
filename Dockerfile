@@ -10,4 +10,4 @@ FROM openjdk:18.0.2.1-jdk-slim
 WORKDIR /KimenFen-1-0.0.1-SNAPSHOT
 COPY --from=build /KimenFen-1-0.0.1-SNAPSHOT/target/KimenFen-1-0.0.1-SNAPSHOT.jar /KimenFen-1-0.0.1-SNAPSHOT/KimenFen-1-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
-CMD ["java","KimenFen1Application.java"]
+CMD ["java","com/kimenFen/cl/KimenFen1Application.java"]
