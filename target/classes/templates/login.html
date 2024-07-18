@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio sesión</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+<main>
+    <div class="pantalla">
+        <div class="caja_fondo">
+            <div class="caja_titulo">
+                <h3>Comunidad Educativa Kimen Fen</h3>
+                <p></p>
+                <img src="/images/kimen.jpg" alt="">
+            </div>
+            <div class="caja_login">
+                <form th:action="@{/login}" method="post" class="login">
+                    <h2>Iniciar Sesión</h2>
+                    <input type="text" placeholder="Rut" name="username" id="username" required>
+                    <input type="password" placeholder="Contraseña" name="password" id="password" required>
+                    <button type="submit">Ingresar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/js/interfaz.js"></script>
+</body>
+</html>
