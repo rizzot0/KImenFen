@@ -3,7 +3,7 @@ COPY pom.xml /KimenFen-1-0.0.1-SNAPSHOT/
 COPY src /KimenFen-1-0.0.1-SNAPSHOT/src/
 
 WORKDIR /KimenFen-1-0.0.1-SNAPSHOT
-
+#a
 RUN mvn clean package -DskipTests
 
 FROM openjdk:18.0.2.1-jdk-slim
