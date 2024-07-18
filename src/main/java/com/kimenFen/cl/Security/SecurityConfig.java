@@ -1,5 +1,6 @@
 package com.kimenFen.cl.Security;
 
+import com.kimenFen.cl.Service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,47 +16,53 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 public class SecurityConfig {
 
+
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests(authorize -> authorize
-                .requestMatchers("/apoderado/**").hasRole("APODERADO")
-                .requestMatchers("/profesor/**").hasAnyRole("PROFESOR", "ADMIN")
-                .requestMatchers("/administrador/**").hasRole("ADMIN")
-                .anyRequest().permitAll()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .successHandler(customAuthenticationSuccessHandler())
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .permitAll()
-            );
-        return http.build();
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+        UserDetails apoderado = User.withDefaultPasswordEncoder()
+                .username("apoderado")
+                .password("password")
+                .roles("APODERADO")
+                .build();
+
+        UserDetails profesor = User.withDefaultPasswordEncoder()
+                .username("profesor")
+                .password("password")
+                .roles("PROFESOR")
+                .build();
+
+        UserDetails administrador = User.withDefaultPasswordEncoder()
+                .username("administrador")
+                .password("password")
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(apoderado, profesor, administrador);
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails apoderado = User.withDefaultPasswordEncoder()
-            .username("apoderado")
-            .password("password")
-            .roles("APODERADO")
-            .build();
+        return new CustomUserDetailsService();
+    }
 
-        UserDetails profesor = User.withDefaultPasswordEncoder()
-            .username("profesor")
-            .password("password")
-            .roles("PROFESOR")
-            .build();
-
-        UserDetails administrador = User.withDefaultPasswordEncoder()
-            .username("administrador")
-            .password("password")
-            .roles("ADMIN")
-            .build();
-
-        return new InMemoryUserDetailsManager(apoderado, profesor, administrador);
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests(authorize -> authorize
+                        .requestMatchers("/administrador/**").hasRole("ADMIN")
+                        .requestMatchers("/profesor/**").hasRole("PROFESOR")
+                        .anyRequest().permitAll()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .successHandler(customAuthenticationSuccessHandler())
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .permitAll()
+                );
+        return http.build();
     }
 
     @Bean

@@ -3,25 +3,27 @@ package com.kimenFen.cl.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "apoderados")
-public class Apoderado {
+@Document(collection = "profesores")
+public class Profesor {
 
 	@Id
 	private String id;
+
 	private String nombre;
 	private String apellido;
 	private String rut;
 	private String telefono;
 
-	public Apoderado() {}
-
-	public Apoderado(String id, String nombre, String apellido, String rut, String telefono) {
+	public Profesor(String id, String nombre, String apellido, String rut, String telefono) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.rut = rut;
 		this.telefono = telefono;
+
 	}
+
+	public Profesor() {}
 
 	public String getId() {
 		return id;

@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio sesión</title>
+    <link rel="stylesheet" href="/css/estilo.css">
 </head>
 <body>
-    <h1>Login</h1>
-    <form th:action="@{/login}" method="post">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username"/>
+<main>
+    <div class="pantalla">
+        <div class="caja_fondo">
+            <div class="caja_titulo">
+                <h3>Comunidad Educativa KimenFen</h3>
+                <p></p>
+                <img src="/images/kimen.jpg" alt="">
+            </div>
+            <div class="caja_login">
+                <form th:action="@{/login}" method="post" class="login">
+                    <h2>Iniciar Sesión</h2>
+                    <input type="text" placeholder="Rut" name="username" id="username" required>
+                    <input type="password" placeholder="Contraseña" name="password" id="password" required>
+                    <button type="submit">Ingresar</button>
+                </form>
+            </div>
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password"/>
-        </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form>
+    </div>
+</main>
+<script src="/js/interfaz.js"></script>
 </body>
 </html>

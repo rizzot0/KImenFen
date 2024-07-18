@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:clth="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lista de Alumnos</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -32,16 +32,9 @@
             <td class="border border-black" th:text="${alumno.direccion}"></td>
             <td class="border border-black" th:text="${alumno.curso}"></td>
             <td class="bg-yellow-800 w-full">
-                <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 editar-alumno" th:if="${rol == 'ROLE_ADMIN'}" href="#" th:attr="data-id=${alumno.id}">Editar</a>
-                <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1" th:if="${rol == 'ROLE_ADMIN'}" th:href="@{/administrador/eliminar-alumno/{id}(id=${alumno.id})}">Eliminar</a>
-
-                <div th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}">
-                    <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 agregar-registro" href="#" th:attr="data-id=${alumno.id},data-rol=${rol}">Agregar Registro de vida</a>
-                </div>
-
-                <a class="py-2 px-4 my-2 text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 ver-registro" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}"  th:attr="data-id=${alumno.id}">Ver Registro de vida</a>
-                <a class="py-2 px-4 my-2 text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 ver-notas" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR' or rol == 'ROLE_APODERADO'}"  th:attr="data-id=${alumno.id}">Ver Notas</a>
-                <a class="text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 agregar-nota" th:if="${rol == 'ROLE_ADMIN' or rol == 'ROLE_PROFESOR'}" th:attr="data-id=${alumno.id}">Agregar Nota</a>
+                <a class="py-2 px-4 my-2 text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 ver-registro" th:attr="data-id=${alumno.id}">Ver Registro de vida</a>
+                <a class="py-2 px-4 my-2 text-blue-300 hover:text-blue-600 underline rounded cursor-pointer px-1 ver-notas" th:attr="data-id=${alumno.id}">Ver Notas</a>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -2,33 +2,95 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Nuevo Alumno</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .text-shadow {
+            text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </head>
 <body>
-    <h1>Agregar Nuevo Alumno</h1>
-    <form th:action="@{/profesor/alumnos/guardar}" th:object="${alumno}" method="post">
+<div class="w-full bg-yellow-700 p-5 flex flex-col justify-between text-yellow-400 rounded">
+    <h1 class="text-2xl font-bold">Agregar Nuevo Alumno</h1>
+    <form th:action="@{/administrador/alumnos/guardar}" th:object="${alumno}" method="post">
         <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" th:field="*{nombre}" />
+            <label class="text-xl" for="nombre">Nombre:</label>
+            <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="nombre" th:field="*{nombre}" />
         </div>
         <div>
-            <label for="apellidoPaterno">Apellido Paterno:</label>
-            <input type="text" id="apellidoPaterno" th:field="*{apellidoPaterno}" />
+            <label class="text-xl" for="apellidoPaterno">Apellido Paterno:</label>
+            <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="apellidoPaterno" th:field="*{apellidoPaterno}" />
         </div>
         <div>
-            <label for="apellidoMaterno">Apellido Materno:</label>
-            <input type="text" id="apellidoMaterno" th:field="*{apellidoMaterno}" />
+            <label class="text-xl" for="apellidoMaterno">Apellido Materno:</label>
+            <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="apellidoMaterno" th:field="*{apellidoMaterno}" />
         </div>
         <div>
-            <label for="rut">RUT:</label>
-            <input type="text" id="rut" th:field="*{rut}" />
+            <label class="text-xl" for="rut">RUT:</label>
+            <input class="text-black rounded px-1 focus:outline-none my-1 peer" type="text" id="rut" th:field="*{rut} " oninput="validarRUT(this)" />
+            <span id="mensaje" class="text-sm font-bold text-shadow"></span>
         </div>
         <div>
-            <label for="telefonoApoderado">Teléfono Apoderado:</label>
-            <input type="text" id="telefonoApoderado" th:field="*{telefonoApoderado}" />
+            <label class="text-xl" for="telefonoApoderado">Teléfono Apoderado:</label>
+            <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="telefonoApoderado" th:field="*{telefonoApoderado}"  />
         </div>
         <div>
-            <button type="submit">Guardar</button>
+            <label class="text-xl" for="direccion">Direccion:</label>
+            <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="direccion" th:field="*{direccion}" />
+        </div>
+        <div>
+            <label class="text-xl" for="curso">Curso:</label>
+            <input class="text-black rounded px-1 focus:outline-none my-1" type="text" id="curso" th:field="*{curso}" />
+        </div>
+        <div>
+            <button id="guardar" class="py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-2xl rounded disabled:bg-gray-400 disabled:cursor-not-allowed" type="submit" disabled>Guardar</button>
         </div>
     </form>
+</div>
+    <script>
+        function validarRUT(input) {
+            const rut = input.value.replace(/\./g, '').replace('-', '');
+            const rutRegex = /^[0-9]{7,8}[0-9Kk]$/;
+
+            if (!rutRegex.test(rut)) {
+                input.classList.remove('border-green-500');
+                input.classList.add('border-red-500');
+                document.getElementById('mensaje').textContent = "Formato de RUT incorrecto";
+                document.getElementById('mensaje').classList.remove('text-green-400');
+                document.getElementById('mensaje').classList.add('text-red-400');
+                document.getElementById('guardar').disabled = true;
+                return;
+            }
+
+            const cuerpo = rut.slice(0, -1);
+            const dv = rut.slice(-1).toUpperCase();
+            let suma = 0;
+            let multiplo = 2;
+
+            for (let i = cuerpo.length - 1; i >= 0; i--) {
+                suma += multiplo * cuerpo.charAt(i);
+                multiplo = (multiplo == 7) ? 2 : multiplo + 1;
+            }
+
+            const dvEsperado = 11 - (suma % 11);
+            const dvValido = (dvEsperado == 11) ? '0' : (dvEsperado == 10) ? 'K' : dvEsperado.toString();
+
+            if (dv === dvValido) {
+                input.classList.remove('border-red-500');
+                input.classList.add('border-green-500');
+                document.getElementById('mensaje').textContent = "RUT aceptado";
+                document.getElementById('mensaje').classList.remove('text-red-400');
+                document.getElementById('mensaje').classList.add('text-green-400');
+                document.getElementById('guardar').disabled = false;
+            } else {
+                input.classList.remove('border-green-500');
+                input.classList.add('border-red-500');
+                document.getElementById('mensaje').textContent = "RUT rechazado";
+                document.getElementById('mensaje').classList.remove('text-green-400');
+                document.getElementById('mensaje').classList.add('text-red-400');
+                document.getElementById('guardar').disabled = true;
+            }
+        }
+    </script>
 </body>
 </html>

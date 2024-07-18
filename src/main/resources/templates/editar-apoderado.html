@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Nuevo Apoderado</title>
+    <title>Editar Apoderado</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .text-shadow {
@@ -11,25 +11,24 @@
 </head>
 <body>
 <div class="w-full bg-yellow-700 p-5 flex flex-col justify-between text-yellow-400 rounded">
-    <h1 class="text-2xl font-bold">Agregar Nuevo Apoderado</h1>
-    <form th:action="@{/administrador/apoderados/guardar}" th:object="${apoderado}" method="post">
-        <div th:if="${error}">
-            <p class="text-red-500" th:text="${error}"></p>
-        </div>
+    <h1 class="text-2xl font-bold">Editar Apoderado</h1>
+    <form th:action="@{/administrador/apoderados/actualizar}" th:object="${apoderado}" method="post">
+        <input type="hidden" th:field="*{id}" />
         <label class="text-xl" for="nombre">Nombre:</label>
-        <input class="text-black rounded px-1 focus:outline-none" type="text" id="nombre" th:field="*{nombre}" />
-        <br/>
+        <input class="text-black rounded px-1 focus:outline-none" type="text" id="nombre" th:field="*{nombre}" /><br/>
+
         <label class="text-xl" for="apellido">Apellido:</label>
-        <input class="text-black rounded px-1 focus:outline-none" type="text" id="apellido" th:field="*{apellido}" />
-        <br/>
+        <input class="text-black rounded px-1 focus:outline-none" type="text" id="apellido" th:field="*{apellido}" /><br/>
+
         <label class="text-xl" for="rut">RUT:</label>
         <input class="text-black rounded px-1 focus:outline-none" type="text" id="rut" th:field="*{rut}" oninput="validarRUT(this)"/>
         <span id="mensaje" class="text-sm font-bold text-shadow"></span>
         <br/>
-        <label class="text-xl" for="telefono">Fono:</label>
-        <input class="text-black rounded px-1 focus:outline-none" type="text" id="telefono" th:field="*{telefono}" />
-        <br/>
-        <button id="guardar" class="py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-2xl rounded disabled:hover:bg-gray-400 disabled:bg-gray-400 disabled:cursor-not-allowed" type="submit">Guardar</button>
+
+        <label class="text-xl" for="telefono">Teléfono:</label>
+        <input class="text-black rounded px-1 focus:outline-none" type="text" id="telefono" th:field="*{telefono}" /><br/>
+
+        <button id="actualizar" class="py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-2xl rounded" type="submit">Actualizar</button>
     </form>
 </div>
 <script>
@@ -43,7 +42,7 @@
             document.getElementById('mensaje').textContent = "Formato de RUT incorrecto";
             document.getElementById('mensaje').classList.remove('text-green-400');
             document.getElementById('mensaje').classList.add('text-red-400');
-            document.getElementById('guardar').disabled = true;
+            document.getElementById('actualizar').disabled = true;
             return;
         }
 
@@ -66,14 +65,14 @@
             document.getElementById('mensaje').textContent = "RUT aceptado";
             document.getElementById('mensaje').classList.remove('text-red-400');
             document.getElementById('mensaje').classList.add('text-green-400');
-            document.getElementById('guardar').disabled = false;
+            document.getElementById('actualizar').disabled = false;
         } else {
             input.classList.remove('border-green-500');
             input.classList.add('border-red-500');
             document.getElementById('mensaje').textContent = "RUT rechazado";
             document.getElementById('mensaje').classList.remove('text-green-400');
             document.getElementById('mensaje').classList.add('text-red-400');
-            document.getElementById('guardar').disabled = true;
+            document.getElementById('actualizar').disabled = true;
         }
     }
 </script>
