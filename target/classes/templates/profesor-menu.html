@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú del Profesor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .text-shadow {
+            text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="font-sans m-0 p-0">
+<div class="flex h-screen">
+    <div class="w-64 bg-green-500 p-5 shadow-lg flex flex-col justify-between text-white">
+        <div class="menu-buttons flex-grow">
+            <h2 class="text-2xl font-bold text-shadow">Comunidad Educativa</h2>
+            <h2 class="text-xl font-semibold mt-2 text-shadow">KimenFen</h2>
+            <h3 class="text-lg font-medium mt-4 text-shadow">Menu Profesor</h3>
+            <button onclick="listarAlumno()" class="w-full py-2 px-4 my-2 bg-green-700 hover:bg-green-800 text-white text-lg text-shadow rounded">Listar Alumnos</button>
+        </div>
+        <button class="w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white text-lg mt-4 text-shadow rounded" onclick="logout()">Cerrar sesión</button>
+    </div>
+    <div class="flex-grow p-5" id="content">
+        <div id="defecto" class="info">
+            <h2 class="text-2xl font-bold text-gray-300"> Sistema KimenFen</h2>
+            <h1 class="w-full  mb-4 text-gray-300">© 2024 KimenFen. Todos los derechos reservados.</h1>
+        </div>
+    </div>
+</div>
+<script>
+    function listarAlumno() {
+        hiddenDefault();
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/alumnos', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+                eventoVerRegistroVida();
+                eventoAgregarRegistroVida();
+                eventoEditarAnotacion();
+                eventoAgregarNota();
+                eventoVerNotas();
+            }
+        };
+        xhr.send();
+    }
+
+    function agregarRegistroDeVida(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/anotacion-alumno/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function verRegistroVida(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/ver-anotaciones/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoAgregarRegistroVida() {
+        document.querySelectorAll('.agregar-registro').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                agregarRegistroDeVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function eventoVerRegistroVida() {
+        document.querySelectorAll('.ver-registro').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                verRegistroVida(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function editarAnotacion(id, rol) {
+        var url = rol === 'ROLE_ADMIN' ? '/administrador/editar-anotacion/' + id : '/profesor/editar-anotacion/' + id;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoEditarAnotacion() {
+        document.querySelectorAll('.editar-anotacion').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var id = event.target.getAttribute('data-id');
+                var rol = document.querySelector('meta[name="rol"]').getAttribute('content');
+                editarAnotacion(id, rol);
+            });
+        });
+    }
+
+    function nuevaNota(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/agregar-nota/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function eventoAgregarNota() {
+        document.querySelectorAll('.agregar-nota').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                nuevaNota(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function eventoVerNotas() {
+        document.querySelectorAll('.ver-notas').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                verNotas(event.target.getAttribute('data-id'));
+            });
+        });
+    }
+
+
+    function verNotas(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/profesor/ver-notas/' + id, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
+
+    function hiddenDefault() {
+        var defaultInfo = document.getElementById('defecto');
+        if (defaultInfo) {
+            defaultInfo.classList.add('hidden');
+        }
+    }
+
+    function logout() {
+        alert("Sesión cerrada");
+        window.location.href = '/logout';
+    }
+</script>
+</body>
+</html>
